@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workers near you</title>
+    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="static/util.css">
+    <link rel="shortcut icon" href="static/fav3.png" type="image/x-icon">
+</head>
+<body>
+    <div class="loader"></div>
+    <header id="header">
+        
+        <nav class="nav1">
+        <div class="logo"><img src="static/logo2.png" alt=""></div>
+        <div class="div2">
+           
+                <li><a href="{{url_for('home')}}">Home</a></li>
+                <li><a href="{{url_for('about')}}">About</a></li>
+                <li><a href="#">Candidate</a>   </li>
+                <li><a href="{{url_for('companies')}}">Companies</a></li>
+                <li><a href="{{url_for('wnearu')}}">Workers near you</a></li>
+                <li class="findjob"><a href="#"><div >Find a job</div></a></li>
+                <li></li>
+                <li class="Hirenow"><a href="#"><div >Hire Now</div></a></li>
+                <li class="login"><a href="#"><div>Login</div></a></li>
+            </div>
+            </nav>
+    </header>
+    <div class="styleheight"></div>
+    <main><div class="search">
+        <div class="h1">
+            <div>Search for workers</div>
+        </div>
+        <form method = "POST" action = "{{url_for('search')}}">
+        <div class="box1">
+        <div class="selectprof">
+            <div class="selectp">Select profession</div>
+            <div class="selectedp">
+                <select name="workersprofession" id="workersprofession">
+                    <option value="notselected"></option>
+                    <option value="Carpenter">Carpenter</option>
+                    <option value="Plumber">Plumber</option>
+                    <option value="Housemaid">Housemaid</option>
+                    <option value="Car Cleaner">Car Cleaner</option>
+                </select>
+            </div>
+        </div>
+        <div class="selectlocation">
+            <div class="location">Select Location</div>
+            <div class="selectedlocation">
+                <select name="Workerslocation" id="Workerslocation">
+                    <option value="notselected" ></option>
+                    <option value="Alandi">Alandi</option>
+                    <option value="Bibewadi">Bibewadi</option>
+                    <option value="Katraj">Katraj</option>
+                    <option value="Shivajinagar">Shivajinagar</option>
+                    <option value="Pimpri chinchwad">Pimpri chinchwad</option>
+                    <option value="Wagholi">Wagholi</option>
+    
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="searchbut" >
+        <button type = "submit">search</button>
+    </div>
+
+            </form>
+</div>
+
+</main>
+    <footer>
+        <p>2023 &copy; W4U All rights reserved</p>
+    </footer>
+</body>
+</html>
