@@ -27,7 +27,10 @@ class RequestMessages(db.Model):
     worker_id = db.Column(db.Integer, nullable = False)
     content = db.Column(db.String(200), nullable = False)
     timestamp = db.Column(db.Time, nullable = True)
-
+    status = db.Column(db.Integer, default=0)
+    # 0 -> sent
+    # 1 -> accepted
+    # 2 -> contract done
 
 
 class Company(db.Model):
@@ -40,6 +43,11 @@ class Company(db.Model):
     def __repr__(self):
         return f'<Company {self.name}>'
 
+
+# class Contracts(db.Model):
+#     __tablename__ = 'contracts'
+#     id = db.Column(db.Integer, primary_key=True)
+#     worker_id =
 
 with app.app_context():
 
@@ -148,5 +156,64 @@ def send_msg():
     with app.app_context():
         all_messages = db.session.execute(db.select(RequestMessages)).scalars()
     return f"{name}, {text}"
-app.run(debug=True)
 
+
+@app.route('/login')
+def login():
+    return render_template('hi.html')
+
+@app.route('/messages', methods=['POST'])
+def show_messages():
+    w_name = request.form['w_name'].strip()
+    print(w_name)
+    with app.app_context():
+        result = db.session.query(Worker).filter(Worker.name==w_name)
+        for r in result:
+            id = r.id
+        messages = db.session.query(RequestMessages).filter(RequestMessages.worker_id==id)
+        msg_list = []
+        for m in messages:
+            new_dict = {"msg_id": m.sr_no, "w_id": m.worker_id,"sender_id": m.employer_id ,"content": m.content}
+            msg_list.append(new_dict)
+
+
+    return render_template("messages.html", all_msgs=msg_list)
+
+
+@app.route('/contracts', methods=['POST'])
+def create_contract():
+    msg_id = request.form['m_id']
+    with app.app_context():
+        msg = db.session.query(RequestMessages).filter(RequestMessages.sr_no==msg_id)
+        for m in msg:
+            m.status = 1
+        db.session.commit()
+    return f"Message {msg_id} is accepted."
+
+
+@app.route('/acceptedContracts/<w_id>')
+def show_accepted_contracts(w_id):
+    with app.app_context():
+        result = db.session.query(RequestMessages).filter((RequestMessages.worker_id == w_id) &
+                                                          (RequestMessages.status == 1)).all()
+        msg_list = []
+        for r in result:
+            new_dict = {"msg_id": r.sr_no, "w_id": r.worker_id, "sender_id": r.employer_id, "content": r.content}
+            msg_list.append(new_dict)
+
+    print(msg_list)
+    return render_template('acceptedMessages.html', accepted_msgs=msg_list)
+
+
+@app.route('/markAsDone', methods=['POST'])
+def mark_contract_asdone():
+    msg_id = request.form['m_id']
+    with app.app_context():
+        msg = db.session.query(RequestMessages).filter(RequestMessages.sr_no==msg_id)
+        for m in msg:
+            m.status = 2
+        db.session.commit()
+    return f"Message {msg_id} is marked as done."
+
+
+app.run(debug=True)

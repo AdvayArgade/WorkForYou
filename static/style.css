@@ -1,0 +1,229 @@
+.loader{
+    height: 4px;
+    background-color: white;
+    animation: loader 0.7s ease-in 0.1s 1 ;
+}
+.nav1{
+    display: flex;
+}
+#header{
+    display:flex;
+    background-color:white ;
+    height: 7vw;
+}
+li{
+    list-style: none;
+    padding: 1.4vw;
+}
+.logo{
+    display: flex;
+    align-items: center;
+}
+.logo img{
+    height:5vw ;
+    padding-left: 1vw;
+}
+.div2{
+    display: flex;
+    align-items: center;
+}
+li  a{
+text-decoration: none;
+color: #7f34be;
+font-size: 1.3999vw;;
+}
+.findjob{
+    background-color: #642bff;
+    height: 0vw;
+    display: flex;
+align-items: center;
+border-radius: 4px;
+  
+}
+.Hirenow{
+    background-color: #642bff;;
+    height: 0vw;
+    display: flex;
+align-items: center;
+border-radius: 4px;
+    
+}
+.Hirenow div{
+    color: white;
+}
+.findjob div{
+    color: white;
+}
+.Hirenow:hover{
+    background-color:#7d53ef;
+}
+.findjob:hover{
+    background-color: #7d53ef;
+}
+li a:hover{
+  color: red;
+
+}
+@keyframes loader{
+    0%{
+        background-color: darkblue;
+        width: 0vw;
+    }
+    50%{
+        background-color: darkblue;
+        width: 30vw;
+    }
+    100%{
+        background-color: darkblue;
+        width: 100vw;
+    }
+}
+.login{
+    padding: 0 0 0 11vw;
+}
+.login div{
+    text-align: center;
+    background-color: #642bff;
+    width: 4.5vw;
+    height: 2vw;
+    color: white;
+    border-radius: 4px;
+    
+
+}
+.login div:hover{
+    background-color: #7d53ef;
+}
+.bigbox{
+    padding: 2vh;
+}
+.search{
+    padding: 1vh;
+    border: 2px solid lightblue;
+}
+.h1{
+    height: 4vw;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+.h1 div{
+font-size: 3.2vh;
+}
+.selectprof{
+    display: inline-block   ;
+}
+.box1{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+#workersprofession{
+    width: 35vw ;
+    font-size: 2.15vh;
+}
+#Workerslocation{
+    width: 35vw;
+    font-size: 2.15vh;
+}
+.selectp{
+    font-size: 2.56vh;
+}
+.location{
+    font-size: 2.56vh;
+}
+.searchbut{
+    height: 8vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.searchbut button{
+    width: 5.3vw;
+    padding: 5px;
+    font-size: 2.56vh;
+    background-color: darkblue;
+    color: white;
+    border-radius: 6px;
+    border: 1px solid white;
+    cursor: pointer;
+}
+.styleheight{
+    height: 7vw;
+}
+footer {
+    height: 5vh;
+    background-color: #6c5bedd4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+footer p{
+    color: white;
+    font-size: 2.56vh;
+}
+
+.job{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.h{
+    width: 40vw;
+    height: 16vw;
+
+}
+.s{
+    width: 40vw;
+    height: 16vw;
+}
+.h p{
+    padding: 1vw;
+    font-size: 1.3vw;
+  
+}
+.s p{
+    padding: 1vw;
+    font-size: 1.3vw;
+  
+}
+.hbut{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #642bff;
+    width: 4vw;
+    height: 1.5vw;
+    border-radius: 4px;
+}
+.hbut:hover{
+    background-color: #7d53ef;
+}
+.sbut:hover{
+    background-color: #7d53ef;
+}
+.hbut a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 1.2vw;
+    text-decoration: none;
+}
+.sbut{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #642bff;
+    width: 6vw;
+    height: 1.5vw;
+    border-radius: 4px;
+} 
+.sbut a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 1.2vw;
+    text-decoration: none;
+}

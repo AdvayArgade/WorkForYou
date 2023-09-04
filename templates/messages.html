@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <h1>Your Messages</h1>
+</head>
+<body>
+{% for m in all_msgs %}
+<form action="{{url_for('create_contract')}}" method="POST">
+    <div>
+<h2>Sender ID: {{m['sender_id']}}</h2>
+<label>{{m['content']}}</label>
+        <input type="hidden" name="w_id" value="{{m['w_id']}}"/>
+        <input type="hidden" name="s_id" value="{{m['sender_id']}}"/>
+        <input type="hidden" name="m_id" value="{{m['msg_id']}}"/>
+    <button type="submit">Accept</button>
+    </div>
+</form>
+{% endfor %}
+<a href="{{ url_for('show_accepted_contracts', w_id = all_msgs[0]['w_id'] ) }}">Show Accepted Contracts</a>
+</body>
+</html>

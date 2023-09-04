@@ -1,0 +1,72 @@
+.flex1{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.tophead{
+    padding: 0 0 0 2vw;
+    color: #5722eab2 ;
+}
+h6{
+    font-size: 2vw;
+    color: rgb(103, 5, 145)
+}
+.box1 img{
+    /* width: 480px; */
+    width: 39vw;
+    padding: 2vw 3vw 0vw 5vw;
+}
+.p1{
+    height: 25vw;
+    padding-left: 1vw;
+}
+.p1 p{
+    padding:1vw;
+    font-size: 1.3vw;
+}
+.horizontalline{
+    padding: 2vw;
+    height: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.line{
+  
+    height: 2px;
+    border-radius: 2px;
+    width: 90vw;
+    background-color: blueviolet;
+}
+.flex2{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly; 
+}
+.p2{
+    padding: 0vw 0vw 0vw 5vw;
+}
+.p3{
+    padding: 0vw 3vw 0vw 0.55vw;
+}
+.p2 p{
+    padding: 1vw; 
+    font-size: 1.3vw;  
+}
+.p3 p{
+    padding: 1vw; 
+    font-size: 1.3vw; 
+}
+.sec{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly; 
+}
+.b1{
+    padding: 1vw 0 0 6vw ;
+    height: 10vw;
+}
+.b2{
+    padding: 1vw 0 0 6vw ;
+    height: 10vw;
+}
