@@ -136,7 +136,7 @@ def search():
 @app.route('/searchResults')
 def show_results():
     print(results)
-    return render_template("searchResults.html", results=results)
+    return render_template("searchResults1.html", results=results)
 
 
 @app.route('/sendMsg', methods=['POST'])
@@ -177,7 +177,7 @@ def show_messages():
             msg_list.append(new_dict)
 
 
-    return render_template("messages.html", all_msgs=msg_list)
+    return render_template("messages1.html", all_msgs=msg_list)
 
 
 @app.route('/contracts', methods=['POST'])
@@ -202,8 +202,7 @@ def show_accepted_contracts(w_id):
             msg_list.append(new_dict)
 
     print(msg_list)
-    return render_template('acceptedMessages.html', accepted_msgs=msg_list)
-
+    return render_template('acceptedMessages1.html', accepted_msgs=msg_list)
 
 @app.route('/markAsDone', methods=['POST'])
 def mark_contract_asdone():

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Results</title>
+
+    <style>
+ * {
+            padding: 0;
+            margin: 0;
+        }
+
+        #heading {
+            text-align: center;
+            font-size: 1.6vw;
+            color: #7f34be;
+        }
+
+        .table1 {
+            display: grid;
+            grid-template-columns: auto auto auto;
+            grid-gap: 9px;
+            padding: 1vw 1vw 2px 1vw;
+
+        }
+        .item1 {
+            border: solid 2px #90a1ff;
+            text-align: center;
+            border-radius: 4px;
+            height: 2vw;
+            background: #642bff;
+            color: white;
+        }
+        .item {
+            border: solid 2px #b8acac;
+            text-align: center;
+            border-radius: 4px;
+            width: 29vw;
+
+        }
+        .table {
+            display: grid;
+            grid-template-columns: auto auto auto;
+            grid-gap: 9px;
+            padding: 5px 1vw 5px 1vw;
+
+        }
+    </style>
+    <link rel="stylesheet" href="static/style.css">
+<link rel="stylesheet" href="static/util.css">
+    <link rel="stylesheet" href="static/about.css">
+<link rel="shortcut icon" href="static/fav3.png" type="image/x-icon">
+</head>
+<body>
+  <div class="loader"></div>
+    <header id="header">
+        
+        <nav class="nav1">
+        <div class="logo"><img src="static/logo2.png" alt=""></div>
+        <div class="div2">
+
+                <li><a href="{{url_for('home')}}">Home</a></li>
+                <li><a href="{{url_for('about')}}">About</a></li>
+                <li><a href="#">Candidate</a>   </li>
+                <li><a href="{{url_for('companies')}}">Companies</a></li>
+                <li><a href="{{url_for('wnearu')}}">Workers near you</a></li>
+                <li class="findjob"><a href="#"><div >Find a job</div></a></li>
+                <li></li>
+                <li class="Hirenow"><a href="#"><div >Hire Now</div></a></li>
+            </div>
+            </nav>
+    </header>
+    <div class="styleheight"></div>
+  <main>
+  <h5 id="heading">Search results</h5>
+  <div class="table1">
+      <div class="item1">Name</div>
+      <div class="item1">Write Message</div>
+      <div class="item1">Mobile no.</div>
+      </div>
+    {% for row in results %}
+
+    <form action="{{url_for('send_msg')}}" method="POST" id="form_{{ loop.index }}">
+      <div class="table">
+        <label class="item" id="w_name">{{row['name']|escape}}</label>
+      <input  class="item"  placeholder="write your Message" type="text" name="msg_text"/>
+        <input type="hidden" name="w_name" value="{{row['name']}}"/>
+        <input type="hidden" name="emp_id" value=1/>
+        <input type="hidden" name="w_id" value={{row['id']}}/>
+      <button  class="item"  id="sendmsg" type="submit">Send</button>
+    </div>
+    </form>
+    {% endfor %}
+  </main>
+</body>
+</html>
