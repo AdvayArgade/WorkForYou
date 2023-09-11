@@ -92,8 +92,52 @@ def companies():
     return render_template("Companies.html")
 
 
-@app.route('/wnearu')
+profession = None
+location = None
+@app.route('/wnearu', methods=['POST', 'GET'])
 def wnearu():
+    global profession, location
+    profession = request.form.get('workersprofession')
+    location = request.form.get('Workerslocation')
+    if profession==None and location==None:
+        print("Fields are none")
+        return render_template('WNearYou2.html')
+    else:
+        global results
+
+        print(profession, location)
+        if profession == 'notselected' and location == 'notselected':
+            profession = None
+            location = None
+            return render_template('WNearYou2.html')
+
+        elif profession == 'notselected':
+            with app.app_context():
+                results_objs = db.session.execute(db.select(Worker).where(Worker.location == location)).scalars()
+                results = [{'id': row.id, 'name': row.name, 'profession': row.profession, 'location': row.location}
+                           for row in results_objs]
+                if len(results) == 0:
+                    return f"No results"
+                return render_template('WNearYou2.html', results=results, location=location, profession=profession)
+
+        elif location == 'notselected':
+            with app.app_context():
+                results_objs = db.session.execute(db.select(Worker).where(Worker.profession == profession)).scalars()
+                results = [{'id': row.id, 'name': row.name, 'profession': row.profession, 'location': row.location}
+                           for row in results_objs]
+                if len(results) == 0:
+                    return f"No results"
+                return render_template('WNearYou2.html', results=results, location=location, profession=profession)
+
+        else:
+            with app.app_context():
+                results_objs = db.session.execute(db.select(Worker).where(Worker.profession == profession and
+                                                                          Worker.location == location)).scalars()
+                results = [{'id': row.id, 'name': row.name, 'profession': row.profession, 'location': row.location}
+                           for row in results_objs]
+                if len(results) == 0:
+                    return f"No results"
+                return render_template('WNearYou2.html', results=results, location=location, profession=profession)
     return render_template("WnearU.html")
 
 
@@ -203,6 +247,7 @@ def show_accepted_contracts(w_id):
 
     print(msg_list)
     return render_template('acceptedMessages1.html', accepted_msgs=msg_list)
+
 
 @app.route('/markAsDone', methods=['POST'])
 def mark_contract_asdone():
