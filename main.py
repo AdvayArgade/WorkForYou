@@ -31,7 +31,7 @@ class RequestMessages(db.Model):
     # 0 -> sent
     # 1 -> accepted
     # 2 -> contract done
-
+    # 3 -> rejected
 
 class Company(db.Model):
     __tablename__ = 'companies'
@@ -206,20 +206,50 @@ def send_msg():
 def login():
     return render_template('hi.html')
 
-@app.route('/messages', methods=['POST'])
+
+logged_in = False
+w_name = None
+
+@app.route('/messages', methods=['POST', 'GET'])
 def show_messages():
-    w_name = request.form['w_name'].strip()
-    print(w_name)
+    global logged_in, w_name
+    if logged_in==False:
+        w_name = request.form['w_name'].strip()
+        print(w_name)
+        logged_in = True
+    else:
+        # Call respective functions for rejecting, accepting or marking a contract as done
+        if 'accept' in request.form:
+            msg_id = request.form['m_id']
+            with app.app_context():
+                msg = db.session.query(RequestMessages).filter(RequestMessages.sr_no == msg_id)
+                for m in msg:
+                    m.status = 1
+                db.session.commit()
+
+        elif 'reject' in request.form:
+            msg_id = request.form['m_id']
+            with app.app_context():
+                msg = db.session.query(RequestMessages).filter(RequestMessages.sr_no == msg_id)
+                for m in msg:
+                    m.status = 3
+                db.session.commit()
+
     with app.app_context():
         result = db.session.query(Worker).filter(Worker.name==w_name)
         for r in result:
             id = r.id
-        messages = db.session.query(RequestMessages).filter(RequestMessages.worker_id==id)
+        messages = db.session.query(RequestMessages).filter(RequestMessages.worker_id==id).order_by(RequestMessages.status)
         msg_list = []
         for m in messages:
-            new_dict = {"msg_id": m.sr_no, "w_id": m.worker_id,"sender_id": m.employer_id ,"content": m.content}
+            new_dict = {"msg_id": m.sr_no,
+                        "w_id": m.worker_id,
+                        "sender_id": m.employer_id ,
+                        "content": m.content,
+                        "status": m.status,
+                        }
             msg_list.append(new_dict)
-
+            print(new_dict)
 
     return render_template("messages1.html", all_msgs=msg_list)
 

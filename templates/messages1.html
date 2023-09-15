@@ -29,6 +29,7 @@
             grid-template-columns: auto auto auto;
             grid-gap: 9px;
             padding: 5px 1vw 5px 1vw;
+            grid-column:1/3 span
 
         }
 
@@ -46,6 +47,11 @@
             text-align: center;
             border-radius: 4px;
             width: 29vw;
+
+        }
+        #accrej{
+        display:grid;
+        grid-template-columns: auto auto;
 
         }
 
@@ -92,7 +98,7 @@
                 <div class="item1">Your response</div>
             </div>
         {% for m in all_msgs %}
-        <form action="{{url_for('create_contract')}}" method="POST">
+        <form action="{{url_for('show_messages')}}" method="POST">
             <div class="table">
                 <h6 class="item">{{m['sender_id']}}</h6>
 
@@ -100,9 +106,30 @@
                 <input type="hidden" name="w_id" value="{{m['w_id']}}" />
                 <input type="hidden" name="s_id" value="{{m['sender_id']}}" />
                 <input type="hidden" name="m_id" value="{{m['msg_id']}}" />
-                <button style="background: #15ca64;
-                color: white;
-                border: white 2px solid; cursor:pointer;" class="item" type="submit">Accept</button>
+
+                {% if m['status'] == 0 %}
+                <div class="item" id="accrej">
+                    <button style="background: #15ca64;width:14vw;
+                    color: white;
+                    border: white 2px solid; cursor:pointer;" class="item" type="submit" name="accept">Accept</button>
+                    <button style="background: #e95353;
+                    color: white;
+                    border: white 2px solid; cursor:pointer; width:14vw;" class="item" type="submit" name="reject">Reject</button>
+                </div>
+                {% endif %}
+
+
+                {% if m['status'] == 1 %}
+                <label class="item">Accepted</label>
+                {% endif %}
+
+                {% if m['status'] == 2 %}
+                <label class="item">Done</label>
+                {% endif %}
+
+                {% if m['status'] == 3 %}
+                <label class="item">Rejected</label>
+                {% endif %}
             </div>
         </form>
         {% endfor %}
