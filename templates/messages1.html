@@ -68,28 +68,12 @@
 <link rel="stylesheet" href="static/util.css">
     <link rel="stylesheet" href="static/about.css">
 <link rel="shortcut icon" href="static/fav3.png" type="image/x-icon">
+       <script src="nav.js"></script>
 </head>
 <body>
 
     <div class="loader"></div>
-    <header id="header">
-
-        <nav class="nav1">
-        <div class="logo"><img src="static/logo2.png" alt=""></div>
-        <div class="div2">
-
-                <li><a href="{{url_for('home')}}">Home</a></li>
-                <li><a href="{{url_for('about')}}">About</a></li>
-                <li><a href="#">Candidate</a>   </li>
-                <li><a href="{{url_for('companies')}}">Companies</a></li>
-                <li><a href="{{url_for('wnearu')}}">Workers near you</a></li>
-                <li class="findjob"><a href="#"><div >Find a job</div></a></li>
-                <li></li>
-                <li class="Hirenow"><a href="#"><div >Hire Now</div></a></li>
-            </div>
-            </nav>
-    </header>
-    <div class="styleheight"></div>
+    <div id="nav"></div>
     <main>
         <h5 id="heading">Your Messages</h5>
             <div class="table1">
