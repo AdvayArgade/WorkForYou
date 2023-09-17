@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,69 +9,75 @@
     <link rel="stylesheet" href="static/util.css">
     <link rel="stylesheet" href="static/about.css">
     <link rel="shortcut icon" href="static/fav3.png" type="image/x-icon">
+    <script src="JS/nav.js"></script>
 </head>
+
 <body>
     <div class="loader"></div>
-    <header id="header">
-        
-        <nav class="nav1">
-        <div class="logo"><img src="../../static/logo2.png" alt=""></div>
-        <div class="div2">
-           
-                <li><a href="{{url_for('home')}}">Home</a></li>
-                <li><a href="{{url_for('about')}}">About</a></li>
-                <li><a href="#">Candidate</a>   </li>
-                <li><a href="{{url_for('companies')}}">Companies</a></li>
-                <li><a href="{{url_for('wnearu')}}">Workers near you</a></li>
-                <li class="findjob"><a href="#"><div >Find a job</div></a></li>
-                <li></li>
-                <li class="Hirenow"><a href="#"><div >Hire Now</div></a></li>
-            </div>
-            </nav>
-    </header>
-    <div class="styleheight"></div>
+    <div id="nav"></div>
     <main>
-<h6 class="tophead">About Us</h6>
-<div class="flex1">
-<div class="box1"><img src="static/Aesthetic.jpg" alt=""></div>
-<div class="p1">
-    <h6>Our team</h3>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio eveniet saepe quis ab architecto!</p>
+        <h6 class="tophead">About Us</h6>
+        <div class="flex1">
+            <div class="box1"><img src="static/Aesthetic.jpg" alt=""></div>
+            <div class="p1">
+                <h6>Our team</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio eveniet saepe quis ab architecto!
+                    </p>
 
-    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Modi repellendus at architecto dolore expedita beatae nulla ratione nostrum, neque, harum dignissimos commodi quos possimus quia? Alias iure ea facere aspernatur.</p>
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Modi repellendus at architecto dolore
+                        expedita beatae nulla ratione nostrum, neque, harum dignissimos commodi quos possimus quia?
+                        Alias iure ea facere aspernatur.</p>
 
-    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Labore ullam, modi iusto sapiente veniam magnam? Voluptas iusto velit omnis recusandae.</p>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio soluta odit quo asperiores accusantium perferendis error officiis repudiandae itaque hic?Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellendus, distinctio! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet, distinctio?
-    </p>
-</div>
-</div>
-<div class="horizontalline"> <div class="line"></div></div>
-<div class="flex2">
-<div class="p2">
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit tempora laboriosam autem nisi, repellat nihil voluptate ea neque.</p>
-    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet fugiat harum recusandae quia quis delectus itaque enim laudantium quidem, corporis odit cumque impedit iusto consequuntur ab officia voluptatibus illum est?</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis praesentium repellat ab incidunt nisi aliquam laboriosam dolorem itaque veritatis ipsum!</p>
-</div>
-<div class="p3">
-    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam ipsum numquam tempora doloremque, repudiandae autem consectetur optio aliquid? Veniam libero tempore obcaecati praesentium debitis at nam itaque. Molestias, dignissimos adipisci.</p>
-    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi saepe odio voluptate maiores accusantium explicabo in animi libero laboriosam incidunt.</p>
-    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Architecto aperiam aspernatur veritatis ut officiis porro culpa, dolor, natus aliquid sapiente quae cumque deleniti, fugit possimus!</p>
-</div>
-</div>
-<section class="sec">
-    <div class="b1">
-        <h6>Our Vision</h6><br>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto delectus quas tempore quisquam aliquid natus fugit accusamus sed. Porro, necessitatibus.</p>
-    </div>
-    <div class="b2">
-        <h6>Our Mission</h6>
-        <br>
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illum, fuga nam vitae incidunt nostrum ipsam, a dolores libero quaerat modi ex. Eaque ab molestias neque recusandae, quibusdam vero beatae. Quibusdam?</p>
-    </div>
-</section>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Labore ullam, modi iusto sapiente
+                        veniam magnam? Voluptas iusto velit omnis recusandae.</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio soluta odit quo asperiores
+                        accusantium perferendis error officiis repudiandae itaque hic?Lorem ipsum dolor sit amet
+                        consectetur, adipisicing elit. Repellendus, distinctio! Lorem ipsum dolor, sit amet consectetur
+                        adipisicing elit. Eveniet, distinctio?
+                    </p>
+            </div>
+        </div>
+        <div class="horizontalline">
+            <div class="line"></div>
+        </div>
+        <div class="flex2">
+            <div class="p2">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit tempora laboriosam autem nisi, repellat
+                    nihil voluptate ea neque.</p>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet fugiat harum recusandae quia quis
+                    delectus itaque enim laudantium quidem, corporis odit cumque impedit iusto consequuntur ab officia
+                    voluptatibus illum est?</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis praesentium repellat ab incidunt nisi
+                    aliquam laboriosam dolorem itaque veritatis ipsum!</p>
+            </div>
+            <div class="p3">
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam ipsum numquam tempora doloremque,
+                    repudiandae autem consectetur optio aliquid? Veniam libero tempore obcaecati praesentium debitis at
+                    nam itaque. Molestias, dignissimos adipisci.</p>
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi saepe odio voluptate maiores
+                    accusantium explicabo in animi libero laboriosam incidunt.</p>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Architecto aperiam aspernatur veritatis ut
+                    officiis porro culpa, dolor, natus aliquid sapiente quae cumque deleniti, fugit possimus!</p>
+            </div>
+        </div>
+        <section class="sec">
+            <div class="b1">
+                <h6>Our Vision</h6><br>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto delectus quas tempore quisquam
+                    aliquid natus fugit accusamus sed. Porro, necessitatibus.</p>
+            </div>
+            <div class="b2">
+                <h6>Our Mission</h6>
+                <br>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illum, fuga nam vitae incidunt nostrum
+                    ipsam, a dolores libero quaerat modi ex. Eaque ab molestias neque recusandae, quibusdam vero beatae.
+                    Quibusdam?</p>
+            </div>
+        </section>
     </main>
     <footer>
         <p>2023 &copy; W4U All rights reserved</p>
     </footer>
 </body>
+
 </html>
