@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Workers near you</title>
-    <link rel="stylesheet" href="static/style.css">
-    <link rel="stylesheet" href="static/util.css">
-    <link rel="shortcut icon" href="static/fav3.png" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='util.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='fav3.png') }}" type="image/x-icon">
     <style>
  * {
             padding: 0;
@@ -53,9 +53,9 @@
 <body>
     <div class="loader"></div>
     <header id="header">
-
+        {% block content %}
         <nav class="nav1">
-        <div class="logo"><img src="static/logo2.png" alt=""></div>
+        <div class="logo"><img src="{{ url_for('static', filename='logo2.png') }}" alt=""></div>
         <div class="div2">
 
                 <li><a href="{{url_for('home')}}">Home</a></li>
@@ -66,9 +66,10 @@
                 <li class="findjob"><a href="#"><div >Find a job</div></a></li>
                 <li></li>
                 <li class="Hirenow"><a href="#"><div >Hire Now</div></a></li>
-                <li class="login"><a href="#"><div>Login</div></a></li>
+                <li class="login"><a href="{{url_for('account_type')}}"><div>Logout</div></a></li>
             </div>
             </nav>
+        {% endblock %}
     </header>
     <div class="styleheight"></div>
     <main><div class="search">
@@ -128,7 +129,7 @@
         <label class="item" id="w_name">{{row['name']|escape}}</label>
       <input  class="item"  placeholder="write your Message" type="text" name="msg_text"/>
         <input type="hidden" name="w_name" value="{{row['name']}}"/>
-        <input type="hidden" name="emp_id" value=1/>
+        <input type="hidden" name="emp_id" value=0/>
         <input type="hidden" name="w_id" value={{row['id']}}/>
       <button  class="item"  id="sendmsg" type="submit">Send</button>
     </div>

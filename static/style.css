@@ -61,7 +61,7 @@ border-radius: 4px;
     background-color: #7d53ef;
 }
 li a:hover{
-  color: red;
+  color: #59d8da;
 
 }
 @keyframes loader{
@@ -69,9 +69,17 @@ li a:hover{
         background-color: darkblue;
         width: 0vw;
     }
+    25%{
+        background-color: darkblue;
+        width: 25vw;
+    }
     50%{
         background-color: darkblue;
-        width: 30vw;
+        width: 50vw;
+    }
+    75%{
+        background-color: darkblue;
+        width: 75vw;
     }
     100%{
         background-color: darkblue;

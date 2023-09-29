@@ -44,6 +44,14 @@ class Company(db.Model):
         return f'<Company {self.name}>'
 
 
+class Customer(db.Model):
+    __tablename__ = 'customers'
+    id = db.Column(db.Integer, primary_key=True)
+    password = db.Column(db.String(50), nullable=False)
+    name = db.Column(db.String(60), unique=True, nullable=False)
+    location = db.Column(db.String(50), nullable=False)
+
+
 # class Contracts(db.Model):
 #     __tablename__ = 'contracts'
 #     id = db.Column(db.Integer, primary_key=True)
@@ -58,9 +66,14 @@ w2 = Worker(name='Madhav Pawar', profession='Plumber', location='Katraj')
 w3 = Worker(name='Harshit Jawale', profession='Car cleaner', location='Bibwewadi')
 w4 = Worker(name='Chandrakant Patil', profession='Plumber', location='Wagholi')
 w5 = Worker(name='Ganesh Chopade', profession='Carpenter', location='Alandi')
+
+c1 = Customer(name='Advay', location='Sahakarnagar', password='1234')
+c2 = Customer(name='Aditya', location='Nagar', password='adideo03')
+
 # with app.app_context():
 #
-#     db.session.add(w1)
+#     db.session.add(c1)
+#     db.session.add(c2)
 #     db.session.commit()
 
 #with app.app_context():
@@ -76,10 +89,13 @@ w5 = Worker(name='Ganesh Chopade', profession='Carpenter', location='Alandi')
 
 
 
-
-@app.route('/')
+c_logged_in = False
+c_name = None
+w_logged_in = False
+w_name = None
+@app.route('/home')
 def home():
-    return render_template("index.html")
+    return render_template("index.html", w_logged_in=w_logged_in, c_logged_in=c_logged_in)
 
 
 @app.route('/about')
@@ -92,9 +108,11 @@ def companies():
     return render_template("Companies.html")
 
 
+
+# ----------------------------------------Searching--------------------------------
 profession = None
 location = None
-@app.route('/wnearu', methods=['POST', 'GET'])
+@app.route('/customer/wnearu', methods=['POST', 'GET'])
 def wnearu():
     global profession, location
     profession = request.form.get('workersprofession')
@@ -182,7 +200,7 @@ def show_results():
     print(results)
     return render_template("searchResults1.html", results=results)
 
-
+#-------------------------------------Messaging --------------------------------
 @app.route('/sendMsg', methods=['POST'])
 def send_msg():
     name = request.form['w_name']
@@ -191,6 +209,10 @@ def send_msg():
     w_id = request.form['w_id']
     emp_id = int(emp_id.replace('/',''))
     w_id = int(w_id.replace('/', ''))
+    with app.app_context():
+        emp_id = db.session.query(Customer).filter(Customer.name==c_name)
+        for e in emp_id:
+            emp_id = e.id
     #Add timestamp
     message = RequestMessages(employer_id=emp_id, worker_id=w_id, content=text, )
     with app.app_context():
@@ -202,21 +224,70 @@ def send_msg():
     return f"{name}, {text}"
 
 
-@app.route('/login')
+
+@app.route('/')
+def account_type():
+    return render_template('account_type.html')
+
+@app.route('/login', methods=['POST'])
 def login():
-    return render_template('hi.html')
+    global c_logged_in, w_logged_in
+    account_type = request.form['account_type']
+    if account_type=='Service Provider':
+        w_logged_in = False
+        return render_template('hi.html')
+
+    else:
+        c_logged_in = False
+        print(c_logged_in)
+        return render_template('customerLogin.html')
 
 
-logged_in = False
-w_name = None
+
+@app.route('/customer/Messages', methods=['POST'])
+def customerMessages():
+    global c_logged_in, c_name
+    c_name = request.form['c_name'].strip()
+    print(c_name)
+    c_logged_in = True
+
+
+    with app.app_context():
+        result = db.session.query(Customer).filter(Customer.name==c_name)
+        for r in result:
+            id = r.id
+        messages = db.session.query(RequestMessages).filter(RequestMessages.employer_id==id).order_by(RequestMessages.status)
+        msg_list = []
+        existing_w_ids = {}
+        for m in messages:
+            if m.worker_id not in existing_w_ids:
+                w_name = db.session.query(Worker).filter(Worker.id==m.worker_id)
+                for w in w_name:
+                    w_name = w.name
+                existing_w_ids[m.worker_id] = w_name
+            else:
+                w_name = existing_w_ids[m.worker_id]
+            new_dict = {"msg_id": m.sr_no,
+                        "w_id": m.worker_id,
+                        "w_name": w_name,
+                        "sender_id": m.employer_id,
+                        "content": m.content,
+                        "status": m.status,
+                        }
+            msg_list.append(new_dict)
+            print(new_dict)
+
+    return render_template('customerMessages.html', all_msgs=msg_list)
+
+
 
 @app.route('/messages', methods=['POST', 'GET'])
 def show_messages():
-    global logged_in, w_name
-    if logged_in==False:
+    global w_logged_in, w_name
+    if w_logged_in==False:
         w_name = request.form['w_name'].strip()
         print(w_name)
-        logged_in = True
+        w_logged_in = True
     else:
         # Call respective functions for rejecting, accepting or marking a contract as done
         if 'accept' in request.form:

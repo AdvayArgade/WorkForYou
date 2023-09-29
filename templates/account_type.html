@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Type</title>
+  <h1>Enter your account type</h1>
+</head>
+<body>
+    <form action="{{url_for('login')}}" method="POST">
+      <label>Account Type</label>
+    <select name = "account_type">
+        <option value="notselected"></option>
+        <option value="Service Provider">Service Provider</option>
+        <option value="Customer">Customer</option>
+    </select>
+    <button type="submit">Log in</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Messages</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        #heading {
+            text-align: center;
+            font-size: 1.6vw;
+            color: #7f34be;
+        }
+
+        .table1 {
+            display: grid;
+            grid-template-columns: auto auto auto;
+            grid-gap: 9px;
+            padding: 1vw 1vw 2px 1vw;
+
+        }
+
+        .table {
+            display: grid;
+            grid-template-columns: auto auto auto;
+            grid-gap: 9px;
+            padding: 5px 1vw 5px 1vw;
+            grid-column:1/3 span
+
+        }
+
+        .item1 {
+            border: solid 2px #90a1ff;
+            text-align: center;
+            border-radius: 4px;
+            height: 2vw;
+            background: #642bff;
+            color: white;
+        }
+
+        .item {
+            border: solid 2px #b8acac;
+            text-align: center;
+            border-radius: 4px;
+            width: 29vw;
+
+        }
+        #accrej{
+        display:grid;
+        grid-template-columns: auto auto;
+
+        }
+
+        #accmsgs {
+            display: block;
+            text-align: center;
+        }
+        .login img {
+            width: 3.34vw;
+
+        }
+    </style>
+ <link rel="stylesheet" href="../static/style.css">
+<link rel="stylesheet" href="../static/util.css">
+    <link rel="stylesheet" href="../static/about.css">
+<link rel="shortcut icon" href="../static/fav3.png" type="image/x-icon">
+</head>
+<body>
+
+    <div class="loader"></div>
+    <header id="header">
+
+        <nav class="nav1">
+        <div class="logo"><img src="../static/logo2.png" alt=""></div>
+        <div class="div2">
+
+                <li><a href="{{url_for('home')}}">Home</a></li>
+                <li><a href="{{url_for('about')}}">About</a></li>
+                <li><a href="#">Candidate</a>   </li>
+                <li><a href="{{url_for('companies')}}">Companies</a></li>
+
+                <li><a href="{{url_for('wnearu')}}">Workers near you</a></li>
+                <li class="findjob"><a href="#"><div >Find a job</div></a></li>
+                <li></li>
+                <li class="Hirenow"><a href="#"><div >Hire Now</div></a></li>
+            </div>
+            </nav>
+    </header>
+    <div class="styleheight"></div>
+    <main>
+        <h5 id="heading">Your Messages</h5>
+            <div class="table1">
+                <div class="item1">Service Provider</div>
+                <div class="item1">Content</div>
+                <div class="item1">Response</div>
+            </div>
+        {% for m in all_msgs %}
+            <div class="table">
+                <h6 class="item">{{m['w_name']}}</h6>
+
+                <label class="item">{{m['content']}}</label>
+                <input type="hidden" name="w_id" value="{{m['w_id']}}" />
+                <input type="hidden" name="s_id" value="{{m['sender_id']}}" />
+                <input type="hidden" name="m_id" value="{{m['msg_id']}}" />
+
+                {% if m['status'] == 0 %}
+                <label class="item">Request pending</label>
+                {% endif %}
+
+
+                {% if m['status'] == 1 %}
+                <label class="item">Accepted</label>
+                {% endif %}
+
+                {% if m['status'] == 2 %}
+                <label class="item">Done</label>
+                {% endif %}
+
+                {% if m['status'] == 3 %}
+                <label class="item">Rejected</label>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+    </main>
+    <footer>
+        <p>2023 &copy; W4U All rights reserved</p>
+    </footer>
+</body>
+
+</html>
