@@ -1,14 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Workers near you</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='util.css') }}">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='fav3.png') }}" type="image/x-icon">
-    <style>
- * {
+{% extends "nav.html" %}
+
+{% block title %}
+<title>Workers Near you</title>
+{% endblock %}
+{% block style %}
+<style>
+  * {
             padding: 0;
             margin: 0;
         }
@@ -17,6 +14,11 @@
             text-align: center;
             font-size: 1.6vw;
             color: #7f34be;
+        }
+
+        #location-and-profession {
+            font-size: 1.4vw;
+            color: #84aff3
         }
 
         .table1 {
@@ -48,34 +50,13 @@
             padding: 5px 1vw 5px 1vw;
 
         }
-    </style>
-</head>
-<body>
-    <div class="loader"></div>
-    <header id="header">
+</style>
+{% endblock %}
 
-        <nav class="nav1">
-        <div class="logo"><img src="{{ url_for('static', filename='logo2.png') }}" alt=""></div>
-        <div class="div2">
+{% block content %}
 
-                <li><a href="{{url_for('home')}}">Home</a></li>
-                <li><a href="{{url_for('about')}}">About</a></li>
-            {% if c_logged_in == True %}
-            <li><a href="{{url_for('customerMessages', username=username)}}">Your Messages</a>   </li>
-            {% else %}
-                <li><a href="#">Candidate</a>   </li>
-            {% endif %}
-                <li><a href="{{url_for('companies')}}">Companies</a></li>
-                <li><a href="{{url_for('wnearu', username=username)}}">Workers near you</a></li>
-                <li class="findjob"><a href="#"><div >Find a job</div></a></li>
-                <li></li>
-                <li class="Hirenow"><a href="#"><div >Hire Now</div></a></li>
-                <li class="login"><a href="{{url_for('account_type')}}"><div>Logout</div></a></li>
-            </div>
-            </nav>
 
-    </header>
-    <div class="styleheight"></div>
+<div class="styleheight"></div>
     <main><div class="search">
         <div class="h1">
             <div>Search for workers</div>
@@ -120,7 +101,14 @@
         <div class="styleheight"></div>
 
   <main>
-  <h5 id="heading">Search results</h5>
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+{% endfor %}
+  <h5 id="heading">Search results for :<span id="location-and-profession"> {{ profession }} - {{ location }}</span></h5>
   <div class="table1">
       <div class="item1">Name</div>
       <div class="item1">Write Message</div>
@@ -130,7 +118,13 @@
 
     <form action="{{url_for('send_msg')}}" method="POST" id="form_{{ loop.index }}">
       <div class="table">
-        <label class="item" id="w_name">{{row['name']|escape}}</label>
+          {% if profession == 'Not specified' %}
+        <label class="item" id="w_name">{{ row['name'] }} - {{ row['profession'] }}</label>
+          {% elif location == 'Not specified' %}
+        <label class="item" id="w_name1">{{ row['name'] }} - {{ row['location'] }}</label>
+          {% else %}
+          <label class="item" id="w_name2">{{ row['name'] }}</label>
+          {% endif %}
       <input  class="item"  placeholder="write your Message" type="text" name="msg_text"/>
         <input type="hidden" name="w_name" value="{{row['name']}}"/>
         <input type="hidden" name="emp_id" value=0/>
@@ -146,5 +140,4 @@
     <footer>
         <p>2023 &copy; W4U All rights reserved</p>
     </footer>
-</body>
-</html>
+{% endblock %}

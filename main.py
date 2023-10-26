@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, g, flash
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+app.secret_key = 'csa_grp2_dbms-Advay12210523'
 db = SQLAlchemy()
 app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:mcks0963@localhost/WorkForYou"
 db.init_app(app)
@@ -93,14 +94,38 @@ c_logged_in = False
 c_name = None
 w_logged_in = False
 w_name = None
+
+@app.context_processor
+def set_global_vars():
+    global c_logged_in, c_name, w_logged_in, w_name
+    if w_name != None:
+        username = w_name
+
+    elif c_name != None:
+        username = c_name
+
+    else:
+        username = None
+    return dict(c_logged_in=c_logged_in, w_logged_in=w_logged_in, username=username)
+
+
+
 @app.route('/home')
 def home():
-    return render_template("index.html", w_logged_in=w_logged_in, c_logged_in=c_logged_in)
+    if w_logged_in:
+        return render_template("index.html", c_logged_in=c_logged_in, w_logged_in=w_logged_in, username=w_name)
+
+    if c_logged_in:
+        return render_template("index.html", c_logged_in = c_logged_in, w_logged_in = w_logged_in, username=c_name)
 
 
 @app.route('/about')
 def about():
-    return render_template("about.html")
+    if w_logged_in:
+        return render_template("about.html", c_logged_in = c_logged_in, w_logged_in = w_logged_in, username=w_name)
+
+    if c_logged_in:
+        return render_template("about.html", c_logged_in = c_logged_in, w_logged_in = w_logged_in, username=c_name)
 
 
 @app.route('/companies')
@@ -108,44 +133,109 @@ def companies():
     return render_template("Companies.html")
 
 
+@app.route('/')
+def account_type():
+    global c_logged_in, w_logged_in, c_name, w_name
+    c_logged_in = False
+    w_logged_in = False
+    c_name = None
+    w_name = None
+    return render_template('account_type.html')
+
+@app.route('/login', methods=['POST'])
+def login():
+    global c_logged_in, w_logged_in, c_name, w_name
+    account_type = request.form['account_type']
+    if account_type=='Service Provider':
+        w_logged_in = False
+        g.w_logged_in = False
+        c_name = None
+        return render_template('hi.html')
+
+    else:
+        c_logged_in = False
+        g.c_logged_in = False
+        print(c_logged_in)
+        w_name = None
+        return render_template('customerLogin.html')
+
+
+@app.route('/SPLogin', methods=['POST', 'GET'])
+def spLogin():
+    global w_logged_in, w_name
+    if request.method == 'POST':
+        username = request.form['w_name']
+        # Redirect to a different route while passing the username as a URL parameter
+        w_logged_in = True
+        w_name = username
+        with app.app_context():
+            result = db.session.query(Worker).filter(Worker.name == w_name).first()
+
+            if result is None:
+                flash('Invalid username')
+                return render_template('hi.html')
+        return redirect(url_for('show_messages', username=username))
+
+    return render_template('hi.html')
+
+@app.route('/customerLogin', methods=['POST', 'GET'])
+def customerLogin():
+    global c_logged_in, c_name
+    if request.method == 'POST':
+        username = request.form['c_name']
+        # Redirect to a different route while passing the username as a URL parameter
+        c_logged_in = True
+        c_name = username
+        with app.app_context():
+            result = db.session.query(Customer).filter(Customer.name == c_name).first()
+
+            if result is None:
+                flash('Invalid username')
+                return render_template('customerLogin.html')
+        return redirect(url_for('customerMessages', username=username))
+
+    return render_template('customerLogin.html')
+
 
 # ----------------------------------------Searching--------------------------------
 profession = None
 location = None
-@app.route('/customer/wnearu', methods=['POST', 'GET'])
-def wnearu():
-    global profession, location
-    profession = request.form.get('workersprofession')
-    location = request.form.get('Workerslocation')
+results = None
+@app.route('/customer/<username>/wnearu', methods=['POST', 'GET'])
+def wnearu(username):
+    global profession, location, c_logged_in, results
+    if request.method == 'POST':
+        profession = request.form.get('workersprofession')
+        location = request.form.get('Workerslocation')
+
     if profession==None and location==None:
         print("Fields are none")
-        return render_template('WNearYou2.html')
+        return render_template('WNearYou.html')
+
     else:
-        global results
 
         print(profession, location)
         if profession == 'notselected' and location == 'notselected':
             profession = None
             location = None
-            return render_template('WNearYou2.html')
+            return render_template('WNearYou.html')
 
         elif profession == 'notselected':
             with app.app_context():
                 results_objs = db.session.execute(db.select(Worker).where(Worker.location == location)).scalars()
                 results = [{'id': row.id, 'name': row.name, 'profession': row.profession, 'location': row.location}
                            for row in results_objs]
-                if len(results) == 0:
-                    return f"No results"
-                return render_template('WNearYou2.html', results=results, location=location, profession=profession)
+
+                return render_template('WNearYou.html', results=results, location=location, profession='Not specified')
 
         elif location == 'notselected':
             with app.app_context():
                 results_objs = db.session.execute(db.select(Worker).where(Worker.profession == profession)).scalars()
                 results = [{'id': row.id, 'name': row.name, 'profession': row.profession, 'location': row.location}
                            for row in results_objs]
-                if len(results) == 0:
-                    return f"No results"
-                return render_template('WNearYou2.html', results=results, location=location, profession=profession)
+
+                return render_template('WNearYou.html', results=results, location='Not specified', profession=profession)
+
 
         else:
             with app.app_context():
@@ -153,10 +243,9 @@ def wnearu():
                                                                           Worker.location == location)).scalars()
                 results = [{'id': row.id, 'name': row.name, 'profession': row.profession, 'location': row.location}
                            for row in results_objs]
-                if len(results) == 0:
-                    return f"No results"
-                return render_template('WNearYou2.html', results=results, location=location, profession=profession)
-    return render_template("WnearU.html")
+
+                return render_template('WNearYou.html', results=results, location=location, profession=profession)
+
 
 
 @app.route('/search', methods=['POST'])
@@ -165,15 +254,14 @@ def search():
     profession = request.form.get('workersprofession')
     location = request.form.get('Workerslocation')
     if profession == 'notselected' and location == 'notselected':
-        return f"No results."
+        return redirect(url_for('show_results'))
 
     elif profession == 'notselected':
         with app.app_context():
             results_objs = db.session.execute(db.select(Worker).where(Worker.location == location)).scalars()
             results = [{'id': row.id, 'name': row.name, 'profession': row.profession, 'location': row.location}
                        for row in results_objs]
-            if len(results) == 0:
-                return f"No results"
+
             return redirect(url_for('show_results'))
 
     elif location == 'notselected':
@@ -181,8 +269,7 @@ def search():
             results_objs = db.session.execute(db.select(Worker).where(Worker.profession == profession)).scalars()
             results = [{'id': row.id, 'name': row.name, 'profession': row.profession, 'location': row.location}
                        for row in results_objs]
-            if len(results) == 0:
-                return f"No results"
+
             return redirect(url_for('show_results'))
 
     else:
@@ -191,8 +278,7 @@ def search():
                                                                       Worker.location==location)).scalars()
             results = [{'id': row.id, 'name': row.name, 'profession': row.profession, 'location': row.location}
                        for row in results_objs]
-            if len(results) == 0:
-                return f"No results"
+
             return redirect(url_for('show_results'))
 
 @app.route('/searchResults')
@@ -203,6 +289,10 @@ def show_results():
 #-------------------------------------Messaging --------------------------------
 @app.route('/sendMsg', methods=['POST'])
 def send_msg():
+    global w_logged_in, w_name
+    if w_logged_in:
+        flash('Please Login with a Customer account to send a message')
+        return redirect(url_for('wnearu', username=w_name))
     name = request.form['w_name']
     text = request.form['msg_text']
     emp_id = request.form['emp_id']
@@ -219,44 +309,34 @@ def send_msg():
         db.session.add(message)
         db.session.commit()
 
+    flash('Message sent successfully.')
+
     with app.app_context():
         all_messages = db.session.execute(db.select(RequestMessages)).scalars()
-    return f"{name}, {text}"
+    return redirect(url_for('wnearu', username=c_name))
 
 
 
-@app.route('/')
-def account_type():
-    return render_template('account_type.html')
-
-@app.route('/login', methods=['POST'])
-def login():
-    global c_logged_in, w_logged_in
-    account_type = request.form['account_type']
-    if account_type=='Service Provider':
-        w_logged_in = False
-        return render_template('hi.html')
-
-    else:
-        c_logged_in = False
-        print(c_logged_in)
-        return render_template('customerLogin.html')
 
 
 
-@app.route('/customer/Messages', methods=['POST'])
-def customerMessages():
-    global c_logged_in, c_name
-    c_name = request.form['c_name'].strip()
-    print(c_name)
-    c_logged_in = True
-
+@app.route('/customer/<username>/Messages', methods=['POST', 'GET'])
+def customerMessages(username):
 
     with app.app_context():
         result = db.session.query(Customer).filter(Customer.name==c_name)
         for r in result:
-            id = r.id
-        messages = db.session.query(RequestMessages).filter(RequestMessages.employer_id==id).order_by(RequestMessages.status)
+            try:
+                id = r.id
+            except UnboundLocalError:
+                return render_template('customerLogin.html')
+
+
+#        print(id)
+        try:
+            messages = db.session.query(RequestMessages).filter(RequestMessages.employer_id==id).order_by(RequestMessages.status)
+        except UnboundLocalError:
+            return render_template('customerLogin.html')
         msg_list = []
         existing_w_ids = {}
         for m in messages:
@@ -277,12 +357,12 @@ def customerMessages():
             msg_list.append(new_dict)
             print(new_dict)
 
-    return render_template('customerMessages.html', all_msgs=msg_list)
+    return render_template('customerMessages.html', all_msgs=msg_list, username=c_name)
 
 
 
-@app.route('/messages', methods=['POST', 'GET'])
-def show_messages():
+@app.route('/serviceProvider/<username>/messages', methods=['POST', 'GET'])
+def show_messages(username):
     global w_logged_in, w_name
     if w_logged_in==False:
         w_name = request.form['w_name'].strip()
@@ -311,11 +391,23 @@ def show_messages():
         for r in result:
             id = r.id
         messages = db.session.query(RequestMessages).filter(RequestMessages.worker_id==id).order_by(RequestMessages.status)
+        for message in messages:
+            print(message.employer_id, message.worker_id)
         msg_list = []
+        existing_c_ids = {}
         for m in messages:
+            if m.employer_id not in existing_c_ids:
+                c_name = db.session.query(Customer).filter(Customer.id == m.employer_id)
+                for c in c_name:
+                    c_name = c.name
+                existing_c_ids[m.employer_id] = c_name
+            else:
+                c_name = existing_c_ids[m.employer_id]
+
             new_dict = {"msg_id": m.sr_no,
                         "w_id": m.worker_id,
-                        "sender_id": m.employer_id ,
+                        "c_name": c_name,
+                        "sender_id": m.employer_id,
                         "content": m.content,
                         "status": m.status,
                         }
@@ -336,8 +428,17 @@ def create_contract():
     return f"Message {msg_id} is accepted."
 
 
-@app.route('/acceptedContracts/<w_id>')
+@app.route('/acceptedContracts/<w_id>', methods=['POST', 'GET'])
 def show_accepted_contracts(w_id):
+    if request.method == 'POST':
+        msg_id = request.form['m_id']
+        with app.app_context():
+            msg = db.session.query(RequestMessages).filter(RequestMessages.sr_no == msg_id)
+            for m in msg:
+                m.status = 2
+            db.session.commit()
+        flash('Marked as Done.')
+
     with app.app_context():
         result = db.session.query(RequestMessages).filter((RequestMessages.worker_id == w_id) &
                                                           (RequestMessages.status == 1)).all()
@@ -350,7 +451,9 @@ def show_accepted_contracts(w_id):
     return render_template('acceptedMessages1.html', accepted_msgs=msg_list)
 
 
-@app.route('/markAsDone', methods=['POST'])
+
+
+@app.route('/markAsDone', methods=['POST', 'GET'])
 def mark_contract_asdone():
     msg_id = request.form['m_id']
     with app.app_context():

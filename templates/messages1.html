@@ -1,9 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'nav.html' %}
 
-<head>
-    <meta charset="UTF-8">
+{% block title %}
     <title>Messages</title>
+{% endblock %}
+
+{% block style %}
     <style>
         * {
             padding: 0;
@@ -64,34 +65,27 @@
             
         }
     </style>
- <link rel="stylesheet" href="static/style.css">
-<link rel="stylesheet" href="static/util.css">
-    <link rel="stylesheet" href="static/about.css">
-<link rel="shortcut icon" href="static/fav3.png" type="image/x-icon">
-       <script src="nav.js"></script>
-</head>
-<body>
+{% endblock %}
 
-    <div class="loader"></div>
-    <div id="nav"></div>
+{% block content %}
     <main>
         <h5 id="heading">Your Messages</h5>
             <div class="table1">
-                <div class="item1">Sender_id</div>
+                <div class="item1">Customer Name</div>
                 <div class="item1">Content</div>
                 <div class="item1">Your response</div>
             </div>
         {% for m in all_msgs %}
-        <form action="{{url_for('show_messages')}}" method="POST">
+        <form method="POST" action="/serviceProvider/{{ username }}/messages" >
             <div class="table">
-                <h6 class="item">{{m['sender_id']}}</h6>
+                <h6 class="item">{{ m.c_name }}</h6>
 
-                <label class="item">{{m['content']}}</label>
-                <input type="hidden" name="w_id" value="{{m['w_id']}}" />
-                <input type="hidden" name="s_id" value="{{m['sender_id']}}" />
-                <input type="hidden" name="m_id" value="{{m['msg_id']}}" />
+                <label class="item">{{m.content}}</label>
+                <input type="hidden" name="w_id" value="{{m.w_id}}" />
+                <input type="hidden" name="s_id" value="{{m.sender_id}}" />
+                <input type="hidden" name="m_id" value="{{m.msg_id}}" />
 
-                {% if m['status'] == 0 %}
+                {% if m.status == 0 %}
                 <div class="item" id="accrej">
                     <button style="background: #15ca64;width:14vw;
                     color: white;
@@ -103,26 +97,25 @@
                 {% endif %}
 
 
-                {% if m['status'] == 1 %}
+                {% if  m.status == 1 %}
                 <label class="item">Accepted</label>
                 {% endif %}
 
-                {% if m['status'] == 2 %}
+                {% if  m.status == 2 %}
                 <label class="item">Done</label>
                 {% endif %}
 
-                {% if m['status'] == 3 %}
+                {% if  m.status == 3 %}
                 <label class="item">Rejected</label>
                 {% endif %}
             </div>
         </form>
         {% endfor %}
-        <a id="accmsgs" href="{{ url_for('show_accepted_contracts', w_id = all_msgs[0]['w_id'] ) }}">Show Accepted
+        <a id="accmsgs" href="/acceptedContracts/{{ all_msgs[0].w_id }}">Show Accepted
             Contracts</a>
     </main>
     <footer>
         <p>2023 &copy; W4U All rights reserved</p>
     </footer>
-</body>
+{% endblock %}
 
-</html>

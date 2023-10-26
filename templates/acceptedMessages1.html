@@ -1,9 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+{% extends "nav.html" %}
+{% block title %}
     <title>AcceptedMessages</title>
-    
+{% endblock %}
+
+{% block style %}
 <style>
     *{
         padding: 0;
@@ -47,26 +47,25 @@
 
         }
 </style>
-<link rel="stylesheet" href="../static/style.css">
-<link rel="stylesheet" href="../static/util.css">
-    <link rel="stylesheet" href="../static/about.css">
-<link rel="shortcut icon" href="../static/fav3.png" type="image/x-icon">
-    <script src="nav.js"></script>
-</head>
-<body>
-    
-    <div class="loader"></div>
-    <div id="nav"></div>
+{% endblock %}
 
+{% block content %}
     <main>
+        {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+        {% endfor %}
         <h5 id="heading">Accepted Contracts</h5>
         <div class="table1">
-            <div class="item1">sender_id</div>
+            <div class="item1">Sender Name</div>
             <div class="item1">Content</div>
             <div class="item1">Your response</div>
         </div>
 {% for m in accepted_msgs %}
-<form action="{{url_for('mark_contract_asdone')}}" method="POST">
+<form action="{{url_for('show_accepted_contracts', w_id = m['w_id'])}}" method="POST">
     <div class="table">
 <h5 class="item">{{m['sender_id']}}</h5>
 <label class="item">{{m['content']}}</label>
@@ -74,7 +73,7 @@
         <input type="hidden" name="m_id" value="{{m['msg_id']}}"/>
     <button  class="item" style="background: #0a0a4d;
     color: white;
-    border: white 2px solid; cursor:pointer;" type="submit">Done</button>
+    border: white 2px solid; cursor:pointer;" type="submit">Mark as Done</button>
     </div>
 </form>
 {% endfor %}
@@ -82,5 +81,5 @@
 <footer>
     <p>2023 &copy; W4U All rights reserved</p>
 </footer>
-</body>
-</html>
+{% endblock %}
+

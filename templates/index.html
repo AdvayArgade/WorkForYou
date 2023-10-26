@@ -1,40 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "nav.html" %}
+
+{% block title %}
     <title>Work for You|World's 1st portal for all Job seekers</title>
-    <meta type="author" description="Asit Anand">
-    <meta type="content" description="Want job, technical job, non technical jobs or labour job seeker.World's 1st portal for all job seeker.">
-    <meta type="keywords" description="technical ,non-technical, labour job">
-    <link rel="stylesheet" href="static/style.css">
-    <link rel="stylesheet" href="static/util.css">
-    <link rel="shortcut icon" href="static/fav3.png" type="image/x-icon">
-</head>
-<body>
-    <div class="loader"></div>
-    <header id="header">
-        
-        <nav class="nav1">
-        <div class="logo"><img src="static/logo2.png" alt=""></div>
-        <div class="div2">
-           
-                <li><a href="{{url_for('home')}}">Home</a></li>
-                <li><a href="{{url_for('about')}}">About</a></li>
-                <li><a href="#">Candidate</a>   </li>
-                <li><a href="{{url_for('companies')}}">Companies</a></li>
-            {% if c_logged_in == True or w_logged_in == True%}
-                <li><a href="{{url_for('wnearu')}}">Workers near you</a></li>
-            {% else %}
-                <li><a href="{{url_for('account_type')}}">Workers near you</a></li>
-            {% endif %}
-                <li class="findjob"><a href="#"><div >Find a job</div></a></li>
-                <li></li>
-                <li class="Hirenow"><a href="#"><div >Hire Now</div></a></li>
-                <li class="login"><a href="#"><div>Login</div></a></li>
-            </div>
-            </nav>
-    </header>
+{% endblock %}
+
+
+{% block content %}
     <div class="styleheight"></div>
     <main>
         <div class="bigbox">
@@ -53,5 +24,4 @@
     <footer>
         <p>2023 &copy; W4U All rights reserved</p>
     </footer>
-</body>
-</html>
+{% endblock %}

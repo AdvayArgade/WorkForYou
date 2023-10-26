@@ -1,9 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "nav.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Messages</title>
+{% block title %}
+<title>Messages</title>
+{% endblock %}
+{% block style %}
     <style>
         * {
             padding: 0;
@@ -49,6 +49,8 @@
             width: 29vw;
 
         }
+
+
         #accrej{
         display:grid;
         grid-template-columns: auto auto;
@@ -64,32 +66,9 @@
 
         }
     </style>
- <link rel="stylesheet" href="../static/style.css">
-<link rel="stylesheet" href="../static/util.css">
-    <link rel="stylesheet" href="../static/about.css">
-<link rel="shortcut icon" href="../static/fav3.png" type="image/x-icon">
-</head>
-<body>
+{% endblock %}
 
-    <div class="loader"></div>
-    <header id="header">
-
-        <nav class="nav1">
-        <div class="logo"><img src="../static/logo2.png" alt=""></div>
-        <div class="div2">
-
-                <li><a href="{{url_for('home')}}">Home</a></li>
-                <li><a href="{{url_for('about')}}">About</a></li>
-                <li><a href="#">Candidate</a>   </li>
-                <li><a href="{{url_for('companies')}}">Companies</a></li>
-
-                <li><a href="{{url_for('wnearu')}}">Workers near you</a></li>
-                <li class="findjob"><a href="#"><div >Find a job</div></a></li>
-                <li></li>
-                <li class="Hirenow"><a href="#"><div >Hire Now</div></a></li>
-            </div>
-            </nav>
-    </header>
+{% block content %}
     <div class="styleheight"></div>
     <main>
         <h5 id="heading">Your Messages</h5>
@@ -100,7 +79,7 @@
             </div>
         {% for m in all_msgs %}
             <div class="table">
-                <h6 class="item">{{m['w_name']}}</h6>
+                <h6 class="item" style="font-size: 16px; color: #7d1eff; ">{{m['w_name']}}</h6>
 
                 <label class="item">{{m['content']}}</label>
                 <input type="hidden" name="w_id" value="{{m['w_id']}}" />
@@ -130,6 +109,4 @@
     <footer>
         <p>2023 &copy; W4U All rights reserved</p>
     </footer>
-</body>
-
-</html>
+{% endblock %}

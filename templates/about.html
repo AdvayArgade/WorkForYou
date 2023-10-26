@@ -1,24 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "nav.html" %}
+
+{% block title %}
     <title>About Us|| WorkforU website</title>
-    <link rel="stylesheet" href="static/style.css">
-    <link rel="stylesheet" href="static/util.css">
-    <link rel="stylesheet" href="static/about.css">
-    <link rel="shortcut icon" href="static/fav3.png" type="image/x-icon">
-      <script src="nav.js"></script>
-</head>
-<body>
-    <div class="loader"></div>
-  <div id="nav"></div>
+{% endblock %}
+
+{% block content %}
     <main>
 <h6 class="tophead">About Us</h6>
 <div class="flex1">
 <div class="box1"><img src="static/Aesthetic.jpg" alt=""></div>
 <div class="p1">
-    <h6>Our team</h3>
+    <h6>Our team</h6>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio eveniet saepe quis ab architecto!</p>
 
     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Modi repellendus at architecto dolore expedita beatae nulla ratione nostrum, neque, harum dignissimos commodi quos possimus quia? Alias iure ea facere aspernatur.</p>
@@ -56,5 +48,4 @@
     <footer>
         <p>2023 &copy; W4U All rights reserved</p>
     </footer>
-</body>
-</html>
+{% endblock %}
