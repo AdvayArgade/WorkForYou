@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 db = SQLAlchemy()
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:mcks0963@localhost/WorkForYou"
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://username:password@localhost/WorkForYou"
 db.init_app(app)
 books = []
 results = []
