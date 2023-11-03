@@ -4,11 +4,9 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 app.secret_key = 'csa_grp2_dbms-Advay12210523'
 db = SQLAlchemy()
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://username:password@localhost/WorkForYou"
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:mcks0963@localhost/WorkForYou"
 db.init_app(app)
-books = []
 results = []
-
 
 class Worker(db.Model):
     __tablename__ = 'workers'
@@ -16,6 +14,9 @@ class Worker(db.Model):
     name = db.Column(db.String(60), unique=True, nullable=False)
     profession = db.Column(db.String(50), nullable=False)
     location = db.Column(db.String(50), nullable=False)
+    password = db.Column(db.String(50), nullable=False)
+    # DOB = db.Column(db.Date, nullable=False)
+
 
     def __repr__(self):
         return f'<Worker {self.name}>'
@@ -73,8 +74,7 @@ c2 = Customer(name='Aditya', location='Nagar', password='adideo03')
 
 # with app.app_context():
 #
-#     db.session.add(c1)
-#     db.session.add(c2)
+#
 #     db.session.commit()
 
 #with app.app_context():
@@ -94,6 +94,8 @@ c_logged_in = False
 c_name = None
 w_logged_in = False
 w_name = None
+w_id = None
+c_id = None
 
 @app.context_processor
 def set_global_vars():
@@ -108,6 +110,16 @@ def set_global_vars():
         username = None
     return dict(c_logged_in=c_logged_in, w_logged_in=w_logged_in, username=username)
 
+
+
+@app.route('/')
+def account_type():
+    global c_logged_in, w_logged_in, c_name, w_name
+    c_logged_in = False
+    w_logged_in = False
+    c_name = None
+    w_name = None
+    return render_template('account_type.html')
 
 
 @app.route('/home')
@@ -133,14 +145,7 @@ def companies():
     return render_template("Companies.html")
 
 
-@app.route('/')
-def account_type():
-    global c_logged_in, w_logged_in, c_name, w_name
-    c_logged_in = False
-    w_logged_in = False
-    c_name = None
-    w_name = None
-    return render_template('account_type.html')
+
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -150,52 +155,81 @@ def login():
         w_logged_in = False
         g.w_logged_in = False
         c_name = None
-        return render_template('hi.html')
+        return render_template('finalLogin.html', account_type='Service Provider')   #replace with hi.html
 
     else:
         c_logged_in = False
         g.c_logged_in = False
         print(c_logged_in)
         w_name = None
-        return render_template('customerLogin.html')
+        return render_template('finalLogin.html', account_type='Customer')   #replace with customerLogin.html
 
 
 @app.route('/SPLogin', methods=['POST', 'GET'])
 def spLogin():
-    global w_logged_in, w_name
+    global w_logged_in, w_name, w_id
     if request.method == 'POST':
         username = request.form['w_name']
+        password = request.form['w_password']
+        print(username, password)
         # Redirect to a different route while passing the username as a URL parameter
-        w_logged_in = True
-        w_name = username
+
         with app.app_context():
-            result = db.session.query(Worker).filter(Worker.name == w_name).first()
+            result = db.session.query(Worker).filter(Worker.name == username).first()
 
             if result is None:
-                flash('Invalid username')
-                return render_template('hi.html')
+                flash('Account does not exist.')
+                return render_template('finalLogin.html', account_type='Service Provider')
+
+            elif result.password!=password:
+                print(result.name)
+                flash('Incorrect username or password.')
+                return render_template('finalLogin.html', account_type='Service Provider')
+
+            else:
+                w_id = result.id
+                w_logged_in = True
+                w_name = username
         return redirect(url_for('show_messages', username=username))
 
     return render_template('hi.html')
 
 @app.route('/customerLogin', methods=['POST', 'GET'])
 def customerLogin():
-    global c_logged_in, c_name
+    global c_logged_in, c_name, c_id
     if request.method == 'POST':
         username = request.form['c_name']
+        password = request.form['c_password']
         # Redirect to a different route while passing the username as a URL parameter
-        c_logged_in = True
-        c_name = username
+
         with app.app_context():
-            result = db.session.query(Customer).filter(Customer.name == c_name).first()
+            result = db.session.query(Customer).filter(Customer.name == username).first()
 
             if result is None:
-                flash('Invalid username')
-                return render_template('customerLogin.html')
+                flash('Account does not exist.')
+                return render_template('finalLogin.html', account_type='Customer')
+
+            elif result.password!=password:
+                flash('Incorrect username or password.')
+                return render_template('finalLogin.html', account_type='Customer')
+
+            else:
+                c_id = result.id
+                c_logged_in = True
+                c_name = username
         return redirect(url_for('customerMessages', username=username))
 
     return render_template('customerLogin.html')
 
+
+@app.route('/customer/signup', methods=['POST', 'GET'])
+def Customer_signup():
+    return render_template('customerSignup.html')
+
+
+@app.route('/serviceProvider/signup')
+def SP_signup():
+    return render_template('SPsignup.html')
 
 # ----------------------------------------Searching--------------------------------
 profession = None
@@ -284,14 +318,14 @@ def search():
 @app.route('/searchResults')
 def show_results():
     print(results)
-    return render_template("searchResults1.html", results=results)
+    return render_template("searchResults.html", results=results)
 
 #-------------------------------------Messaging --------------------------------
 @app.route('/sendMsg', methods=['POST'])
 def send_msg():
     global w_logged_in, w_name
     if w_logged_in:
-        flash('Please Login with a Customer account to send a message')
+        flash('Please login with a Customer account to send a message.')
         return redirect(url_for('wnearu', username=w_name))
     name = request.form['w_name']
     text = request.form['msg_text']
@@ -414,7 +448,7 @@ def show_messages(username):
             msg_list.append(new_dict)
             print(new_dict)
 
-    return render_template("messages1.html", all_msgs=msg_list)
+    return render_template("messages.html", all_msgs=msg_list)
 
 
 @app.route('/contracts', methods=['POST'])
@@ -428,8 +462,9 @@ def create_contract():
     return f"Message {msg_id} is accepted."
 
 
-@app.route('/acceptedContracts/<w_id>', methods=['POST', 'GET'])
-def show_accepted_contracts(w_id):
+@app.route('/acceptedContracts/<w_name>', methods=['POST', 'GET'])
+def show_accepted_contracts(w_name):
+    global w_id
     if request.method == 'POST':
         msg_id = request.form['m_id']
         with app.app_context():
@@ -443,12 +478,26 @@ def show_accepted_contracts(w_id):
         result = db.session.query(RequestMessages).filter((RequestMessages.worker_id == w_id) &
                                                           (RequestMessages.status == 1)).all()
         msg_list = []
+        existing_c_ids = {}
         for r in result:
-            new_dict = {"msg_id": r.sr_no, "w_id": r.worker_id, "sender_id": r.employer_id, "content": r.content}
+            if r.employer_id not in existing_c_ids:
+                c_name = db.session.query(Customer).filter(Customer.id == r.employer_id)
+                for c in c_name:
+                    c_name = c.name
+                existing_c_ids[r.employer_id] = c_name
+            else:
+                c_name = existing_c_ids[r.employer_id]
+            new_dict = {"msg_id": r.sr_no,
+                        "w_id": r.worker_id,
+                        "sender_id": r.employer_id,
+                        "c_name": c_name,
+                        "content": r.content}
             msg_list.append(new_dict)
 
+
+
     print(msg_list)
-    return render_template('acceptedMessages1.html', accepted_msgs=msg_list)
+    return render_template('acceptedMessages.html', accepted_msgs=msg_list)
 
 
 
