@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='util.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='about.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='fav3.png') }}" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <style>
+        .center-box {
+            margin: 0 auto;
+            width: 50%;
+            padding: 10px;
+            border: 1px solid black;
+        }
+        h1 {
+            color: rgb(174, 16, 222);
+        }
+        button {
+  background-color: #b70eff;
+  color: white;
+  border: none;
+  padding: 10px;
+}
+input, select {
+  display: inline-block;
+  margin: 10px;
+}
+    </style>
+</head>
+<body>
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    {% endfor %}
+    <div class="center-box">
+        <h1>Login</h1>
+
+        {% if account_type=='Service Provider' %}
+        <form action="{{ url_for('spLogin') }}" method="post" id="w_login">
+            <div>
+                <label for="w_name">Username</label>
+                <input type="text" id="w_name" name="w_name">
+            </div>
+            <br>
+            <div>
+                <label for="w_password">Password</label>
+                <input type="password" id="w_password" name="w_password">
+            </div>
+
+            <p>Don't have an account? <a href="{{ url_for('SP_signup') }}">Create an account</a></p>
+            <button>Login</button>
+        </form>
+        {% elif account_type=='Customer' %}
+        <form action="{{ url_for('customerLogin') }}" method="post" id="c_login">
+            <div>
+                <label for="c_name">Username</label>
+                <input type="text" id="c_name" name="c_name">
+            </div>
+            <br>
+            <div>
+                <label for="c_password">Password</label>
+                <input type="password" id="c_password" name="c_password">
+            </div>
+
+            <p>Don't have an account? <a href="{{ url_for('Customer_signup') }}">Create an account</a></p>
+            <button>Login</button>
+        </form>
+        {% endif %}
+    </div>
+    
+</body>
+</html>
