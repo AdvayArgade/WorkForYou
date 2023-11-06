@@ -52,12 +52,12 @@ input, select {
 {% endfor %}
     <div class="center-box">
         <h1>Signup</h1>
-        <form action="{{ url_for('SP_signup') }}" method="post" id="signup">
+        <form action="{{ url_for('Customer_signup') }}" method="post" id="signup">
             <div>
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name">
             </div>
-            
+
             <div>
                 <label for="ph_no">Phone Number</label>
                 <input type="ph_no" id="ph_no" name="ph_no">
@@ -75,28 +75,8 @@ input, select {
 
 
             <div>
-                <label for="profession">Profession</label>
-                <select id="profession" name="profession">
-                    <option value="Carpenter">Carpenter</option>
-                    <option value="Plumber">Plumber</option>
-                    <option value="Housemaid">Housemaid</option>
-                    <option value="Car Cleaner">Car Cleaner</option>
-
-                </select>
-            </div>
-
-
-            <div>
-                <label for="w_location">Location</label>
-                <select id="w_location" name="w_location">
-                    <option value="Alandi">Alandi</option>
-                    <option value="Bibewadi">Bibewadi</option>
-                    <option value="Katraj">Katraj</option>
-                    <option value="Shivajinagar">Shivajinagar</option>
-                    <option value="Pimpri chinchwad">Pimpri chinchwad</option>
-                    <option value="Wagholi">Wagholi</option>
-
-                </select>
+                <label for="c_location">Location</label>
+                <input type="text" id="c_location" name="c_location">
             </div>
 
             <p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>

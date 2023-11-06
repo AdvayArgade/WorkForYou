@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Worker's Profile</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+</head>
+<body>
+    
+    <h1>Your Profile</h1>
+    
+    <!-- <form action="process-login.php" method="post" id="profile-form" novalidate> -->
+        <div>
+            <label for="name">Name: </label>
+            <input type="text" id="name" name="name" disabled>
+        </div>
+        <br>
+
+        <div>
+            <label for="profession">Profession: </label>
+            <input type="text" id="profession" name="profession" disabled>
+        </div>
+        <br>
+
+        <div>
+            <label for="city">City: </label>
+            <input type="text" id="city" name="city" disabled>
+        </div>
+        <br>
+        
+        <button id="edit-button">Edit Profile</button>
+        <button type="submit" id="save-button" disabled>Save Changes</button>
+    </form>
+
+    <script>
+        const editButton = document.getElementById('edit-button');
+        const saveButton = document.getElementById('save-button');
+        const nameInput = document.getElementById('name');
+        const professionInput = document.getElementById('profession');
+        const cityInput = document.getElementById('city');
+
+        editButton.addEventListener('click', () => {
+            nameInput.removeAttribute('disabled');
+            professionInput.removeAttribute('disabled');
+            cityInput.removeAttribute('disabled');
+            saveButton.removeAttribute('disabled');
+        });
+    </script>
+</body>
+</html>

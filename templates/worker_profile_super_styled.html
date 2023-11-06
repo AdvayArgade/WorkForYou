@@ -1,0 +1,82 @@
+{% extends "nav.html" %}
+{% block title %}
+<title>Your Profile</title>
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+{% endblock %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+{% endfor %}
+    <h1>Your Profile</h1>
+    
+    <form action="" method="post" id="profile-form">
+        <div>
+            <label for="name">Name: </label>
+            <input type="text" id="name" name="name" value="{{ profile_results[0]['name'] }}">
+        </div>
+        <br>
+
+        <div>
+            <label for="ph_no">Phone Number</label>
+            <input type="text" id="ph_no" name="ph_no" value="{{ profile_results[0]['ph_no'] }}">
+        </div>
+        <br>
+
+        {% if w_logged_in %}
+        <div>
+            <label for="profession">Profession: </label>
+            <input type="text" id="profession" name="profession" value="{{ profile_results[0]['profession'] }}">
+        </div>
+        <br>
+        {% endif %}
+
+        <div>
+            <label for="password">Password: </label>
+            <input type="text" id="password" name="password" value="{{ profile_results[0]['password'] }}">
+        </div>
+        <br>
+
+        <div>
+            <label for="dob">Date of Birth: </label>
+            <input type="date" id="dob" name="dob" value="{{ profile_results[0]['dob'] }}">
+        </div>
+        <br>
+
+        <div>
+            <label for="location">Location: </label>
+            <input type="text" id="location" name="location" value="{{ profile_results[0]['location'] }}">
+        </div>
+        <br>
+        
+        <!--button id="edit-button">Edit Profile</button-->
+        <button type="submit" id="save-button">Save Changes</button>
+    </form>
+
+    <!--script>
+        const editButton = document.getElementById('edit-button');
+        const saveButton = document.getElementById('save-button');
+        const nameInput = document.getElementById('name');
+        const professionInput = document.getElementById('profession');
+        const locationInput = document.getElementById('location');
+        const passwordInput = document.getElementById('password');
+        const dobInput = document.getElementById('dob');
+
+        editButton.addEventListener('click', () => {
+            nameInput.removeAttribute('disabled');
+            professionInput.removeAttribute('disabled');
+            locationInput.removeAttribute('disabled');
+            saveButton.removeAttribute('disabled');
+            passwordInput.removeAttribute('disabled');
+            dobInput.removeAttribute('disabled');
+        });
+    </script-->
+{% endblock %}

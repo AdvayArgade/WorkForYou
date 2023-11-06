@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Results</title>
+    <h1>Results:</h1>
+</head>
+<body>
+    {% for row in results %}
+    <form action="{{url_for('send_msg')}}" method="POST" id="form_{{ loop.index }}">
+        <label id="w_name">{{row['name']|escape}}</label>
+      <label>Message</label>
+      <input type="text" name="msg_text"/>
+        <input type="hidden" name="w_name" value="{{row['name']}}"/>
+        <input type="hidden" name="emp_id" value=1/>
+        <input type="hidden" name="w_id" value={{row['id']}}/>
+      <button type="submit">Send</button>
+
+    </form>
+    {% endfor %}
+
+</body>
+</html>

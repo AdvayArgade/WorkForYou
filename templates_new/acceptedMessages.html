@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <h2>Accepted Contracts</h2>
+</head>
+<body>
+{% for m in accepted_msgs %}
+<form action="{{url_for('mark_contract_asdone')}}" method="POST">
+    <div>
+<h2>Sender ID: {{m['sender_id']}}</h2>
+<label>{{m['content']}}</label>
+
+        <input type="hidden" name="m_id" value="{{m['msg_id']}}"/>
+    <button type="submit">Done</button>
+    </div>
+</form>
+{% endfor %}
+
+</body>
+</html>

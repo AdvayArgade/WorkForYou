@@ -56,10 +56,10 @@
 {% block content %}
 
 
-<!--div class="styleheight"></div-->
+<div style="height=5vw;"></div>
     <main><div class="search">
         <div class="h1">
-            <div>Search for workers</div>
+            <div style="font-weight: bold">Search for workers</div>
         </div>
         <form method = "POST" action="{{ url_for('wnearu', username=username) }}">
         <div class="box1">
@@ -98,7 +98,7 @@
             </form>
 </div>
         {% if profession and location %}
-        <!--div class="styleheight"></div-->
+        <div class="space" style="height:2.6vw;"></div>
 
   <main>
 {% for message in get_flashed_messages() %}
@@ -112,7 +112,7 @@
   <div class="table1">
       <div class="item1">Name</div>
       <div class="item1">Write Message</div>
-      <div class="item1">Send Message</div>
+      <div class="item1">Mobile no.</div>
       </div>
     {% for row in results %}
 
@@ -123,13 +123,13 @@
           {% elif location == 'Not specified' %}
         <label class="item" id="w_name1">{{ row['name'] }} - {{ row['location'] }}</label>
           {% else %}
-          <label class="item" id="w_name2">{{ row['name'] }}</label>
+          <label class="item" id="w_name2" style="margin-left: 3vw;width: 22vw;margin-right: 3vw;">{{ row['name'] }}</label>
           {% endif %}
       <input  class="item"  placeholder="write your Message" type="text" name="msg_text"/>
         <input type="hidden" name="w_name" value="{{row['name']}}"/>
         <input type="hidden" name="emp_id" value=0/>
         <input type="hidden" name="w_id" value={{row['id']}}/>
-      <button  class="item"  id="sendmsg" type="submit">Send</button>
+      <button  class="item"  id="sendmsg" type="submit" style="margin-left: 3vw;width: 22vw;margin-right: 3vw;">Send</button>
     </div>
     </form>
     {% endfor %}
@@ -137,5 +137,7 @@
 
         {% endif %}
 </main>
-
+    <footer>
+        <p>2023 &copy; W4U All rights reserved</p>
+    </footer>
 {% endblock %}

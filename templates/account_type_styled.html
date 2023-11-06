@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Type</title>
+    <h1>Enter your account type</h1>
+    <style>
+    @import url('https://fonts.googleapis.com/css?family=Lato');
+
+        body {
+            font-family: 'Lato', sans-serif;
+        }
+
+        h1, h2, h3, h4, h5, h6,
+        label {
+            font-family: 'Lato', sans-serif;
+        }
+    body {
+      margin: 0 auto;
+      width: 50%;
+      padding: 10px;
+      border: 1px solid black;
+    }
+    h1 {
+            color: rgb(174, 16, 222);
+        }
+        button {
+  background-color: #b70eff;
+  color: white;
+  border: none;
+  padding: 10px;
+}
+input, select {
+  display: inline-block;
+  margin: 10px;
+}
+  </style>
+</head>
+<body>
+<form action="{{url_for('login')}}" method="POST">
+    <label>Account Type</label>
+    <select name = "account_type">
+        <option value="notselected"></option>
+        <option value="Service Provider">Service Provider</option>
+        <option value="Customer">Customer</option>
+    </select>
+    <button type="submit">Log in</button>
+</form>
+</body>
+</html>

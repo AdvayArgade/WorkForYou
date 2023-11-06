@@ -6,20 +6,33 @@
 
 
 {% block content %}
-    <div class="styleheight"></div>
-    <main>
+
+    <main style="background-image:url('../static/website background_img.jpg');height:130vh;background-size:contain;background-repeat:no-repeat;">
+        <div class="space" style="height: 11vw;"></div>
         <div class="bigbox">
     <div class="job">
-        <div class="h">
+        <div class="h" style="background-color: #fe995b">
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto ratione dolore sequi, vel dicta autem officiis itaque nobis voluptatum magni dolores nemo aliquid illum nam accusantium, doloribus impedit aliquam id.</p>
-            <div class="hbut"><a href="hire.html">Hire</a></div>
+            <div class="hbut"><a href="#">Hire</a></div>
         </div>
-        <div class="s">
+        <div class="s" style="background-color: #6c93ef;">
            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis, placeat amet vero nobis, consequuntur repudiandae sunt iste temporibus quaerat voluptate quas dicta soluta tempora quo porro voluptates magni nisi facere?</p>
-           <div class="sbut" ><a href="sform.html">Seek Job</a></div>
+           <div class="sbut" ><a href="#">Seek Job</a></div>
         </div>
     </div>
 </div>
+        <div style="background-color:white;height:1vw;margin-top:9vw;"></div>
     </main>
+    <footer>
+        <img src="../static/logo1.png" alt="workforU_logo" style="width: 10vw;margin-right: -11vw;">
+        <p style="margin-bottom:0vh; margin-left: 11vw;">Copyright &copy; 2023 WorkforU.com</p>
+        <div style="margin-left: 16vw;">
+          <a href="www.facebook.com"><img src="../static/facebook.png" alt="workforU_logo" style="width: 1.6vw;margin:1vw"></a>
+          <a href="www.twitter.com"><img src="../static/twitter.png" alt="workforU_logo" style="width: 2.6vw;"></a>
+          <a href="www.instagram.com"><img src="../static/instagram.png" alt="workforU_logo" style="width: 2.6vw;margin:1vw"></a>
+           <a href="ww.github.com"><img src="../static/github.png" alt="workforU_logo" style="width: 2.6vw;"></a>
 
+        </div>
+
+    </footer>
 {% endblock %}

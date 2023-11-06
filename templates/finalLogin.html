@@ -10,6 +10,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css?family=Lato');
+
+        body {
+            font-family: 'Lato', sans-serif;
+        }
+
+        h1, h2, h3, h4, h5, h6,
+        label {
+            font-family: 'Lato', sans-serif;
+        }
         .center-box {
             margin: 0 auto;
             width: 50%;
@@ -42,7 +52,7 @@ input, select {
     <div class="center-box">
         <h1>Login</h1>
 
-        {% if account_type=='Service Provider' %}
+        {% if w_logged_in %}
         <form action="{{ url_for('spLogin') }}" method="post" id="w_login">
             <div>
                 <label for="w_name">Username</label>
@@ -57,7 +67,7 @@ input, select {
             <p>Don't have an account? <a href="{{ url_for('SP_signup') }}">Create an account</a></p>
             <button>Login</button>
         </form>
-        {% elif account_type=='Customer' %}
+        {% elif c_logged_in %}
         <form action="{{ url_for('customerLogin') }}" method="post" id="c_login">
             <div>
                 <label for="c_name">Username</label>
