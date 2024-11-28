@@ -1,9 +1,14 @@
+
 {% extends "nav.html" %}
 
 {% block title %}
     <title>Work for You|World's 1st portal for all Job seekers</title>
 {% endblock %}
-
+{% block style %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Edu+TAS+Beginner:wght@500&display=swap" rel="stylesheet">
+{% endblock %}
 
 {% block content %}
 
@@ -12,27 +17,18 @@
         <div class="bigbox">
     <div class="job">
         <div class="h" style="background-color: #fe995b">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto ratione dolore sequi, vel dicta autem officiis itaque nobis voluptatum magni dolores nemo aliquid illum nam accusantium, doloribus impedit aliquam id.</p>
-            <div class="hbut"><a href="#">Hire</a></div>
+            <p>Find the perfect professional for your job at WorkForYou. Our platform connects you with skilled workers ready to meet your needs, making it easier than ever to get things done. Don't wait, hire the best today!</p>
+            <div class="hbut"><a href="{{url_for('wnearu', username=username) }}">Hire</a></div>
         </div>
         <div class="s" style="background-color: #6c93ef;">
-           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis, placeat amet vero nobis, consequuntur repudiandae sunt iste temporibus quaerat voluptate quas dicta soluta tempora quo porro voluptates magni nisi facere?</p>
-           <div class="sbut" ><a href="#">Seek Job</a></div>
+          <p>Looking for the right job opportunity? WorkForYou is your gateway to countless job possibilities. Explore a wide range of job listings and connect with employers who value your skills and dedication. Your dream job is just a click away!</p>
+           <div class="sbut" ><a href="{{url_for('wnearu', username=username) }}">Seek Job</a></div>
         </div>
     </div>
 </div>
+
         <div style="background-color:white;height:1vw;margin-top:9vw;"></div>
+        <div style="font-size: 7vh;padding: 18vh;color: white;font-family: 'Edu TAS Beginner', cursive; margin-left: 4vh;  padding-top: 8vh;">"Work gives you meaning and purpose and life is empty without it"</div>
     </main>
-    <footer>
-        <img src="../static/logo1.png" alt="workforU_logo" style="width: 10vw;margin-right: -11vw;">
-        <p style="margin-bottom:0vh; margin-left: 11vw;">Copyright &copy; 2023 WorkforU.com</p>
-        <div style="margin-left: 16vw;">
-          <a href="www.facebook.com"><img src="../static/facebook.png" alt="workforU_logo" style="width: 1.6vw;margin:1vw"></a>
-          <a href="www.twitter.com"><img src="../static/twitter.png" alt="workforU_logo" style="width: 2.6vw;"></a>
-          <a href="www.instagram.com"><img src="../static/instagram.png" alt="workforU_logo" style="width: 2.6vw;margin:1vw"></a>
-           <a href="ww.github.com"><img src="../static/github.png" alt="workforU_logo" style="width: 2.6vw;"></a>
 
-        </div>
-
-    </footer>
 {% endblock %}

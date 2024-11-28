@@ -1,89 +1,147 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <title>Login</title>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">-->
+<!--    <link rel="stylesheet" href="{{ url_for('static', filename='util.css') }}">-->
+<!--    <link rel="stylesheet" href="{{ url_for('static', filename='about.css') }}">-->
+<!--    <link rel="shortcut icon" href="{{ url_for('static', filename='fav3.png') }}" type="image/x-icon">-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>-->
+<!--    <style>-->
+<!--        @import url('https://fonts.googleapis.com/css?family=Lato');-->
+
+<!--        body {-->
+<!--            font-family: 'Lato', sans-serif;-->
+<!--        }-->
+
+<!--        h1, h2, h3, h4, h5, h6,-->
+<!--        label {-->
+<!--            font-family: 'Lato', sans-serif;-->
+<!--        }-->
+<!--        .center-box {-->
+<!--            margin: 0 auto;-->
+<!--            width: 50%;-->
+<!--            padding: 10px;-->
+<!--            border: 1px solid black;-->
+<!--        }-->
+<!--        h1 {-->
+<!--            color: rgb(174, 16, 222);-->
+<!--        }-->
+<!--        button {-->
+<!--  background-color: #b70eff;-->
+<!--  color: white;-->
+<!--  border: none;-->
+<!--  padding: 10px;-->
+<!--}-->
+<!--input, select {-->
+<!--  display: inline-block;-->
+<!--  margin: 10px;-->
+<!--}-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--    {% for message in get_flashed_messages() %}-->
+<!--    <div class="alert alert-warning alert-dismissible fade show" role="alert">-->
+<!--        {{ message }}-->
+<!--        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>-->
+<!--    </div>-->
+
+<!--    {% endfor %}-->
+<!--    <div class="center-box">-->
+<!--        <h1>Login</h1>-->
+
+<!--        {% if w_logged_in %}-->
+<!--        <form action="{{ url_for('spLogin') }}" method="post" id="w_login">-->
+<!--            <div>-->
+<!--                <label for="w_name">Username</label>-->
+<!--                <input type="text" id="w_name" name="w_name">-->
+<!--            </div>-->
+<!--            <br>-->
+<!--            <div>-->
+<!--                <label for="w_password">Password</label>-->
+<!--                <input type="password" id="w_password" name="w_password">-->
+<!--            </div>-->
+
+<!--            <p>Don't have an account? <a href="{{ url_for('SP_signup') }}">Create an account</a></p>-->
+<!--            <button>Login</button>-->
+<!--        </form>-->
+<!--        {% elif c_logged_in %}-->
+<!--        <form action="{{ url_for('customerLogin') }}" method="post" id="c_login">-->
+<!--            <div>-->
+<!--                <label for="c_name">Username</label>-->
+<!--                <input type="text" id="c_name" name="c_name">-->
+<!--            </div>-->
+<!--            <br>-->
+<!--            <div>-->
+<!--                <label for="c_password">Password</label>-->
+<!--                <input type="password" id="c_password" name="c_password">-->
+<!--            </div>-->
+
+<!--            <p>Don't have an account? <a href="{{ url_for('Customer_signup') }}">Create an account</a></p>-->
+<!--            <button>Login</button>-->
+<!--        </form>-->
+<!--        {% endif %}-->
+<!--    </div>-->
+<!--    -->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='util.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='about.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="{{ url_for('static', filename='output.css') }}" rel="stylesheet">
     <link rel="shortcut icon" href="{{ url_for('static', filename='fav3.png') }}" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css?family=Lato');
-
-        body {
-            font-family: 'Lato', sans-serif;
-        }
-
-        h1, h2, h3, h4, h5, h6,
-        label {
-            font-family: 'Lato', sans-serif;
-        }
-        .center-box {
-            margin: 0 auto;
-            width: 50%;
-            padding: 10px;
-            border: 1px solid black;
-        }
-        h1 {
-            color: rgb(174, 16, 222);
-        }
-        button {
-  background-color: #b70eff;
-  color: white;
-  border: none;
-  padding: 10px;
-}
-input, select {
-  display: inline-block;
-  margin: 10px;
-}
-    </style>
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>-->
 </head>
-<body>
-    {% for message in get_flashed_messages() %}
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        {{ message }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="w-full max-w-md bg-white shadow-lg rounded-lg p-8">
+        {% for message in get_flashed_messages() %}
+        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4 rounded-lg flex items-center justify-between" role="alert">
+            <span>{{ message }}</span>
+            <button type="button" class="text-yellow-700 hover:text-yellow-900 font-bold" aria-label="Close" onclick="this.parentElement.style.display='none';">
+                &times;
+            </button>
+        </div>
 
-    {% endfor %}
-    <div class="center-box">
-        <h1>Login</h1>
+        {% endfor %}
+
+        <h1 class="text-3xl font-semibold text-purple-700 text-center mb-6">Login</h1>
 
         {% if w_logged_in %}
-        <form action="{{ url_for('spLogin') }}" method="post" id="w_login">
-            <div>
-                <label for="w_name">Username</label>
-                <input type="text" id="w_name" name="w_name">
+        <form action="{{ url_for('spLogin') }}" method="post" id="w_login" class="space-y-6">
+            <div class="flex flex-col">
+                <label for="w_name" class="text-gray-700 font-medium">Username</label>
+                <input type="text" id="w_name" name="w_name" class="border border-gray-300 rounded-lg p-3 w-full" required>
             </div>
-            <br>
-            <div>
-                <label for="w_password">Password</label>
-                <input type="password" id="w_password" name="w_password">
+            <div class="flex flex-col">
+                <label for="w_password" class="text-gray-700 font-medium">Password</label>
+                <input type="password" id="w_password" name="w_password" class="border border-gray-300 rounded-lg p-3 w-full" required>
             </div>
-
-            <p>Don't have an account? <a href="{{ url_for('SP_signup') }}">Create an account</a></p>
-            <button>Login</button>
+            <p class="text-sm text-gray-500">Don't have an account? <a href="{{ url_for('SP_signup') }}" class="text-purple-600 hover:underline">Create an account</a></p>
+            <button class="w-full bg-purple-600 text-white rounded-lg py-3 hover:bg-purple-700 transition-colors">Login</button>
         </form>
-        {% elif c_logged_in %}
-        <form action="{{ url_for('customerLogin') }}" method="post" id="c_login">
-            <div>
-                <label for="c_name">Username</label>
-                <input type="text" id="c_name" name="c_name">
-            </div>
-            <br>
-            <div>
-                <label for="c_password">Password</label>
-                <input type="password" id="c_password" name="c_password">
-            </div>
 
-            <p>Don't have an account? <a href="{{ url_for('Customer_signup') }}">Create an account</a></p>
-            <button>Login</button>
+        {% elif c_logged_in %}
+        <form action="{{ url_for('customerLogin') }}" method="post" id="c_login" class="space-y-6">
+            <div class="flex flex-col">
+                <label for="c_name" class="text-gray-700 font-medium">Username</label>
+                <input type="text" id="c_name" name="c_name" class="border border-gray-300 rounded-lg p-3 w-full" required>
+            </div>
+            <div class="flex flex-col">
+                <label for="c_password" class="text-gray-700 font-medium">Password</label>
+                <input type="password" id="c_password" name="c_password" class="border border-gray-300 rounded-lg p-3 w-full" required>
+            </div>
+            <p class="text-sm text-gray-500">Don't have an account? <a href="{{ url_for('Customer_signup') }}" class="text-purple-600 hover:underline">Create an account</a></p>
+            <button class="w-full bg-purple-600 text-white rounded-lg py-3 hover:bg-purple-700 transition-colors">Login</button>
         </form>
         {% endif %}
     </div>
-    
 </body>
 </html>
+

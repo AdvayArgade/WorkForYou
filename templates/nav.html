@@ -31,7 +31,11 @@
             {% elif w_logged_in %}
             <li><a href="{{url_for('show_messages', username=username)}}">Your Messages</a></li>
             {% endif %}
+            {% if w_logged_in %}
                 <li><a href="{{ url_for('show_profile', username=username) }}">Your Profile</a></li>
+            {% elif c_logged_in %}
+                <li><a href="#">Your Profile</a></li>
+            {% endif %}
             {% if c_logged_in or w_logged_in %}
                 <li><a href="{{url_for('wnearu', username=username) }}">Workers near you</a></li>
             {% else %}
@@ -51,7 +55,16 @@
 {% block content %}{% endblock %}
 </body>
 <footer>
-    <p>2023 &copy; W4U All rights reserved</p>
-</footer>
+        <img src="{{ url_for('static', filename='logo2.png') }}" alt="workforU_logo" style="width: 10vw;margin-right: -11vw;">
+        <p style="margin-bottom:0vh; margin-left: 15vw;">Copyright &copy; 2023 WorkforYou.com</p>
+        <div style="margin-left: 16vw;">
+          <a href="www.facebook.com"><img src="{{ url_for('static', filename='facebook.png') }}" alt="workforU_logo" style="width: 1.6vw;margin:1vw"></a>
+          <a href="www.twitter.com"><img src="{{ url_for('static', filename='twitter.png') }}" alt="workforU_logo" style="width: 2.6vw;"></a>
+          <a href="www.instagram.com"><img src="{{ url_for('static', filename='instagram.png') }}" alt="workforU_logo" style="width: 2.6vw;margin:1vw"></a>
+           <a href="ww.github.com"><img src="{{ url_for('static', filename='github.png') }}" alt="workforU_logo" style="width: 2.6vw;"></a>
+
+        </div>
+
+    </footer>
 <script src = "{{ url_for('static', filename='nav.js') }}"></script>
 </html>

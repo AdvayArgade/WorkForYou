@@ -1,50 +1,79 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Account Type</title>-->
+<!--    <h1>Enter your account type</h1>-->
+<!--    <style>-->
+<!--    @import url('https://fonts.googleapis.com/css?family=Lato');-->
+
+<!--        body {-->
+<!--            font-family: 'Lato', sans-serif;-->
+<!--        }-->
+
+<!--        h1, h2, h3, h4, h5, h6,-->
+<!--        label {-->
+<!--            font-family: 'Lato', sans-serif;-->
+<!--        }-->
+<!--    body {-->
+<!--      margin: 0 auto;-->
+<!--      width: 50%;-->
+<!--      padding: 10px;-->
+<!--      border: 1px solid black;-->
+<!--    }-->
+<!--    h1 {-->
+<!--            color: rgb(174, 16, 222);-->
+<!--        }-->
+<!--        button {-->
+<!--  background-color: #b70eff;-->
+<!--  color: white;-->
+<!--  border: none;-->
+<!--  padding: 10px;-->
+<!--}-->
+<!--input, select {-->
+<!--  display: inline-block;-->
+<!--  margin: 10px;-->
+<!--}-->
+<!--  </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<form action="{{url_for('login')}}" method="POST">-->
+<!--    <label>Account Type</label>-->
+<!--    <select name = "account_type">-->
+<!--        <option value="notselected"></option>-->
+<!--        <option value="Service Provider">Service Provider</option>-->
+<!--        <option value="Customer">Customer</option>-->
+<!--    </select>-->
+<!--    <button type="submit">Log in</button>-->
+<!--</form>-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Type</title>
-    <h1>Enter your account type</h1>
-    <style>
-    @import url('https://fonts.googleapis.com/css?family=Lato');
-
-        body {
-            font-family: 'Lato', sans-serif;
-        }
-
-        h1, h2, h3, h4, h5, h6,
-        label {
-            font-family: 'Lato', sans-serif;
-        }
-    body {
-      margin: 0 auto;
-      width: 50%;
-      padding: 10px;
-      border: 1px solid black;
-    }
-    h1 {
-            color: rgb(174, 16, 222);
-        }
-        button {
-  background-color: #b70eff;
-  color: white;
-  border: none;
-  padding: 10px;
-}
-input, select {
-  display: inline-block;
-  margin: 10px;
-}
-  </style>
+    <link href="{{ url_for('static', filename='output.css') }}" rel="stylesheet">
 </head>
-<body>
-<form action="{{url_for('login')}}" method="POST">
-    <label>Account Type</label>
-    <select name = "account_type">
-        <option value="notselected"></option>
-        <option value="Service Provider">Service Provider</option>
-        <option value="Customer">Customer</option>
-    </select>
-    <button type="submit">Log in</button>
-</form>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
+        <h1 class="text-3xl font-semibold text-purple-700 text-center mb-6">Enter your account type</h1>
+        <form action="{{ url_for('login') }}" method="POST" class="space-y-6">
+            <div class="flex flex-col">
+                <label class="text-gray-700 font-medium mb-2">Account Type</label>
+                <select name="account_type" class="border border-gray-300 rounded-lg p-3">
+                    <option value="notselected" disabled selected>Select your account type</option>
+                    <option value="Service Provider">Service Provider</option>
+                    <option value="Customer">Customer</option>
+                </select>
+            </div>
+            <button type="submit" class="w-full bg-purple-600 text-white rounded-lg py-3 hover:bg-purple-700 transition-colors">
+                Log in
+            </button>
+        </form>
+    </div>
 </body>
 </html>
+

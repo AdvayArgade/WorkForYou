@@ -273,6 +273,9 @@ def Customer_signup():
             if "PhoneNumberLengthError" in str(e):
                 flash('Phone number must be exactly ten digits.')
 
+            if 'AgeError' in str(e):
+                flash('Age must be above 18.')
+
     return render_template('CustomerSignup.html')
 
 
@@ -287,6 +290,9 @@ def SP_signup():
         profession = request.form['profession']
         location = request.form['w_location']
         # call create account procedure
+        if name == '' or ph_no == '' or password == '' or dob == '' or location == '':
+            flash('Please enter all fields.')
+            return render_template('CustomerSignup.html')
         try:
             with app.app_context():
                 sql = text("CALL CreateAcc5(:p_name, :p_profession, :p_location, :p_password, :p_dob, :p_phone_number)")
@@ -338,7 +344,7 @@ profile_results = []
 def show_profile(username):
     global w_name, w_logged_in, w_id, c_name, c_logged_in, c_id, profile_results
     if w_logged_in:
-        w = db.session.query(Worker).filter(Worker.id == w_id).first()
+        w = db.session.query(Worker).filter(Worker.name == w_name).first()
         print(w)
         if profile_results==[]:
             profile_results = [{'name': w.name, 'ph_no': w.phone, "password": w.password, "dob": w.DOB,
@@ -380,6 +386,8 @@ def show_profile(username):
                 w_name = name
                 w_logged_in = True
                 flash('Profile updated successfully!')
+                profile_results = [{"name": name, "ph_no": ph_no, "password": password, "dob": dob,
+                                        "profession": profession, "location": location, "w_id": w_id}]
                 return render_template('worker_profile_super_styled.html', profile_results=profile_results)
 
             except KeyError as e:
